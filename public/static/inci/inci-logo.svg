@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Inci">
+<title>Inci</title>
+<!-- tile with a hard offset shadow -->
+<rect x="58" y="58" width="430" height="430" fill="#1a1a1a"/>
+<rect x="24" y="24" width="430" height="430" fill="#d4f27a" stroke="#1a1a1a" stroke-width="14"/>
+<!-- outline pass: the same shapes, thick ink, so only the outer contour shows -->
+<g stroke="#1a1a1a" stroke-width="22" stroke-linejoin="round">
+<circle cx="150.0" cy="290.0" r="40" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="136.0" cy="330.0" r="38" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="132.0" cy="370.0" r="36" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="140.0" cy="408.0" r="32" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="166.0" cy="340.0" r="40" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="162.0" cy="396.0" r="30" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="362.0" cy="290.0" r="40" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="376.0" cy="330.0" r="38" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="380.0" cy="370.0" r="36" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="372.0" cy="408.0" r="32" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="346.0" cy="340.0" r="40" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="350.0" cy="396.0" r="30" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="256.0" cy="250.0" r="118" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="256.0" cy="132.0" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="306.2" cy="143.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="344.9" cy="176.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="363.2" cy="223.5" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="357.0" cy="272.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="327.6" cy="313.8" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="281.8" cy="337.0" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="230.2" cy="337.0" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="184.4" cy="313.8" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="155.0" cy="272.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="148.8" cy="223.5" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="167.1" cy="176.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="205.8" cy="143.9" r="46" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="256.0" cy="124.0" r="50" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="214.0" cy="138.0" r="44" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="298.0" cy="138.0" r="44" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+<circle cx="256.0" cy="96.0" r="30" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="22"/>
+</g>
+<!-- fill pass -->
+<circle cx="150.0" cy="290.0" r="40" fill="#3f271d"/>
+<circle cx="136.0" cy="330.0" r="38" fill="#3f271d"/>
+<circle cx="132.0" cy="370.0" r="36" fill="#3f271d"/>
+<circle cx="140.0" cy="408.0" r="32" fill="#3f271d"/>
+<circle cx="166.0" cy="340.0" r="40" fill="#3f271d"/>
+<circle cx="162.0" cy="396.0" r="30" fill="#3f271d"/>
+<circle cx="362.0" cy="290.0" r="40" fill="#3f271d"/>
+<circle cx="376.0" cy="330.0" r="38" fill="#3f271d"/>
+<circle cx="380.0" cy="370.0" r="36" fill="#3f271d"/>
+<circle cx="372.0" cy="408.0" r="32" fill="#3f271d"/>
+<circle cx="346.0" cy="340.0" r="40" fill="#3f271d"/>
+<circle cx="350.0" cy="396.0" r="30" fill="#3f271d"/>
+<circle cx="256.0" cy="250.0" r="118" fill="#5c3a2c"/>
+<circle cx="256.0" cy="132.0" r="46" fill="#5c3a2c"/>
+<circle cx="306.2" cy="143.9" r="46" fill="#5c3a2c"/>
+<circle cx="344.9" cy="176.9" r="46" fill="#5c3a2c"/>
+<circle cx="363.2" cy="223.5" r="46" fill="#5c3a2c"/>
+<circle cx="357.0" cy="272.9" r="46" fill="#5c3a2c"/>
+<circle cx="327.6" cy="313.8" r="46" fill="#5c3a2c"/>
+<circle cx="281.8" cy="337.0" r="46" fill="#5c3a2c"/>
+<circle cx="230.2" cy="337.0" r="46" fill="#5c3a2c"/>
+<circle cx="184.4" cy="313.8" r="46" fill="#5c3a2c"/>
+<circle cx="155.0" cy="272.9" r="46" fill="#5c3a2c"/>
+<circle cx="148.8" cy="223.5" r="46" fill="#5c3a2c"/>
+<circle cx="167.1" cy="176.9" r="46" fill="#5c3a2c"/>
+<circle cx="205.8" cy="143.9" r="46" fill="#5c3a2c"/>
+<circle cx="256.0" cy="124.0" r="50" fill="#5c3a2c"/>
+<circle cx="214.0" cy="138.0" r="44" fill="#5c3a2c"/>
+<circle cx="298.0" cy="138.0" r="44" fill="#5c3a2c"/>
+<circle cx="256.0" cy="96.0" r="30" fill="#5c3a2c"/>
+<!-- curl texture -->
+<g fill="none" stroke="#3f271d" stroke-width="9" stroke-linecap="round">
+<path d="M196 182 a16 16 0 1 1 22 14"/>
+<path d="M282 176 a16 16 0 1 1 22 14"/>
+<path d="M240 150 a14 14 0 1 1 20 12"/>
+<path d="M168 236 a14 14 0 1 1 18 14"/>
+<path d="M326 236 a14 14 0 1 1 18 14"/>
+<path d="M150 330 a12 12 0 1 1 16 12"/>
+<path d="M352 330 a12 12 0 1 1 16 12"/>
+</g>
+<!-- eyes peeking under the fringe -->
+<circle cx="216" cy="250" r="14" fill="#1a1a1a"/>
+<circle cx="296" cy="250" r="14" fill="#1a1a1a"/>
+<circle cx="221" cy="245" r="4.5" fill="#fff"/>
+<circle cx="301" cy="245" r="4.5" fill="#fff"/>
+<g stroke="#1a1a1a" stroke-width="8">
+<circle cx="200" cy="226" r="22" fill="#5c3a2c"/>
+<circle cx="236" cy="222" r="22" fill="#5c3a2c"/>
+<circle cx="276" cy="222" r="22" fill="#5c3a2c"/>
+<circle cx="312" cy="226" r="22" fill="#5c3a2c"/>
+</g>
+<g>
+<circle cx="200" cy="222" r="21" fill="#5c3a2c"/>
+<circle cx="236" cy="218" r="21" fill="#5c3a2c"/>
+<circle cx="276" cy="218" r="21" fill="#5c3a2c"/>
+<circle cx="312" cy="222" r="21" fill="#5c3a2c"/>
+<rect x="186" y="196" width="140" height="26" fill="#5c3a2c"/>
+</g>
+<!-- muzzle, nose, mouth -->
+<g stroke="#1a1a1a" stroke-width="10">
+<ellipse cx="256" cy="316" rx="70" ry="50" fill="#7b5242"/>
+<circle cx="208" cy="346" r="22" fill="#7b5242"/><circle cx="240" cy="360" r="22" fill="#7b5242"/>
+<circle cx="272" cy="360" r="22" fill="#7b5242"/><circle cx="304" cy="346" r="22" fill="#7b5242"/>
+</g>
+<ellipse cx="256" cy="316" rx="65" ry="45" fill="#7b5242"/>
+<circle cx="208" cy="344" r="17" fill="#7b5242"/><circle cx="240" cy="356" r="17" fill="#7b5242"/>
+<circle cx="272" cy="356" r="17" fill="#7b5242"/><circle cx="304" cy="344" r="17" fill="#7b5242"/>
+<ellipse cx="256" cy="298" rx="34" ry="25" fill="#24150f" stroke="#1a1a1a" stroke-width="8"/>
+<ellipse cx="246" cy="290" rx="9" ry="5" fill="#fff" opacity="0.85"/>
+<path d="M256 323 v14 M256 337 q-16 14 -30 4 M256 337 q16 14 30 4" fill="none" stroke="#1a1a1a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
