@@ -19,7 +19,13 @@
             "question": "A question:",
             "idea": "An idea:",
             "unclear": "Could be clearer:"
-        }
+        },
+        "loadingHelp": "Loading writing suggestions…",
+        "fixApplied": "Suggestion applied.",
+        "undo": "Undo",
+        "deleteConfirm": "Delete your comment?",
+        "cancel": "Cancel",
+        "agree": "Agree with this comment ({{n}})"
     },
     "vote": {
         "adminNotAnonymous": "You are logged in to the admin, your vote will not be anonymous.",
@@ -39,7 +45,8 @@
         "menuNoDate": "Without date",
         "list": "Go to talks list",
         "vote": "Vote for the talk ",
-        "date": "Display talks for the "
+        "date": "Display talks for the ",
+        "commented": "You commented"
     },
     "footer": {
         "madeBy": "Powered by"

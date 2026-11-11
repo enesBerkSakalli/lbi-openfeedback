@@ -2,9 +2,12 @@ import { makeStyles } from '@mui/styles'
 import type { Theme } from '@mui/material/styles'
 import { DateTime } from 'luxon'
 import Typography from '@mui/material/Typography'
-import { VoteButton } from '../components/VoteButton.tsx'
+import Chip from '@mui/material/Chip'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import { useTranslation } from 'react-i18next'
 import type { TextVoteResult } from '../core/getVoteResultSelectorSelector'
+import { accentFill, accentText } from '../../accent'
 
 interface VoteTextResultItemStyleProps {
     isLast: boolean
@@ -12,29 +15,42 @@ interface VoteTextResultItemStyleProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        display: 'flex',
         marginTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        borderBottom: (props: VoteTextResultItemStyleProps) =>
+            props.isLast ? '' : `1px solid ${theme.palette.paperBorder}`,
     },
-    button: {
-        width: '80px !important',
-        height: '80px !important',
-        float: 'left',
-        marginRight: theme.spacing(2),
-    },
-    right: {
-        flexDirection: 'row',
-        flex: 1,
+    meta: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: theme.spacing(1),
     },
     date: {
         color: theme.palette.textDimmed,
         fontSize: 14,
-        marginBottom: 0,
+        margin: 0,
+    },
+    agree: {
+        height: 40,
+        borderRadius: 20,
+        fontVariantNumeric: 'tabular-nums',
+        color: accentText(theme),
+        borderColor: accentText(theme),
+        '& .MuiChip-icon': {
+            color: 'inherit',
+        },
+    },
+    agreeSelected: {
+        backgroundColor: accentFill(theme),
+        borderColor: accentFill(theme),
+        color: theme.palette.common.white,
+        '&:hover': {
+            backgroundColor: accentFill(theme),
+        },
     },
     comment: {
-        borderBottom: (props: VoteTextResultItemStyleProps) =>
-            props.isLast ? '' : `1px solid ${theme.palette.paperBorder}`,
-        paddingBottom: 15,
-        marginTop: 10,
+        marginTop: theme.spacing(1),
         wordBreak: 'break-word',
         whiteSpace: 'pre-wrap',
     },
@@ -44,6 +60,7 @@ interface VoteTextResultItemProps {
     vote: TextVoteResult
     isLast: boolean
     isSelected: boolean
+    /** Unused: the agree chip follows the app accent color. */
     chipColors?: string[]
     onVoteChange: () => void
     currentUserId: string
@@ -53,7 +70,6 @@ export const VoteTextResultItem = ({
     vote,
     isLast,
     isSelected,
-    chipColors,
     onVoteChange,
     currentUserId,
 }: VoteTextResultItemProps) => {
@@ -66,26 +82,30 @@ export const VoteTextResultItem = ({
 
     return (
         <li className={classes.container}>
-            <VoteButton
-                className={classes.button}
-                count={voteCount ?? 1}
-                isSelected={isSelected}
-                chipColors={chipColors}
-                onClick={onVoteChange}
-            >
-                {voteCount} {voteCount > 1 ? 'votes' : 'vote'}
-            </VoteButton>
-            <div className={classes.right}>
+            <div className={classes.meta}>
                 <p className={classes.date}>
                     {DateTime.fromJSDate(vote.updatedAt)
                         .minus({ seconds: 1 })
                         .toRelative()}
                     {isVoteFromUser ? ', ' + t('vote.yourVote') : ''}
                 </p>
-                <Typography className={classes.comment} color="textPrimary">
-                    {vote.text}
-                </Typography>
+                <Chip
+                    className={`${classes.agree} ${
+                        isSelected ? classes.agreeSelected : ''
+                    }`}
+                    variant="outlined"
+                    icon={
+                        isSelected ? <ThumbUpIcon /> : <ThumbUpOutlinedIcon />
+                    }
+                    label={voteCount ?? 1}
+                    onClick={onVoteChange}
+                    aria-pressed={isSelected}
+                    aria-label={t('comment.agree', { n: voteCount ?? 1 })}
+                />
             </div>
+            <Typography className={classes.comment} color="textPrimary">
+                {vote.text}
+            </Typography>
         </li>
     )
 }

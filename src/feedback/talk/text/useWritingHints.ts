@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Lint, Suggestion, WorkerLinter } from 'harper.js'
 
 /** One grammar, spelling or style hint from Harper on the current comment. */
@@ -10,9 +10,29 @@ export interface WritingHint {
     suggestions: Suggestion[]
 }
 
-const MAX_HINTS = 5
+/** `unavailable`: skipped (data saver, slow network) or failed to load. */
+export type WritingHelpStatus = 'idle' | 'loading' | 'ready' | 'unavailable'
+
+// Few hints, shown after a real pause: they must not crowd the writing.
+const MAX_HINTS = 2
 const MAX_SUGGESTIONS = 3
-const LINT_DELAY_MS = 600
+const LINT_DELAY_MS = 1500
+
+interface NetworkInformationLike {
+    saveData?: boolean
+    effectiveType?: string
+}
+
+// The binary is too heavy for data-saver mode or 2G: native spellcheck only.
+const isConstrainedNetwork = (): boolean => {
+    const connection = (
+        navigator as Navigator & { connection?: NetworkInformationLike }
+    ).connection
+    return (
+        !!connection?.saveData ||
+        ['slow-2g', '2g'].includes(connection?.effectiveType ?? '')
+    )
+}
 
 let linterPromise: Promise<WorkerLinter> | null = null
 
@@ -43,23 +63,40 @@ const getLinter = (): Promise<WorkerLinter> => {
 export const useWritingHints = (text: string, enabled: boolean) => {
     const [linter, setLinter] = useState<WorkerLinter | null>(null)
     const [hints, setHints] = useState<WritingHint[]>([])
+    const [status, setStatus] = useState<WritingHelpStatus>('idle')
+    // Not state: a status change must not re-run (and cancel) the loading effect.
+    const startedRef = useRef(false)
 
     useEffect(() => {
-        if (!enabled || linter) {
+        if (!enabled || startedRef.current) {
+            return
+        }
+        startedRef.current = true
+        if (isConstrainedNetwork()) {
+            setStatus('unavailable')
             return
         }
         let cancelled = false
+        setStatus('loading')
         getLinter()
             .then((loaded) => {
                 if (!cancelled) {
                     setLinter(loaded)
+                    setStatus('ready')
                 }
             })
-            .catch(() => undefined)
+            .catch(() => {
+                if (!cancelled) {
+                    setStatus('unavailable')
+                }
+            })
         return () => {
             cancelled = true
+            // Lets a re-mounted effect (React strict mode) start again; the
+            // linter promise is shared, so nothing is downloaded twice.
+            startedRef.current = false
         }
-    }, [enabled, linter])
+    }, [enabled])
 
     useEffect(() => {
         if (!linter || !text.trim()) {
@@ -68,8 +105,15 @@ export const useWritingHints = (text: string, enabled: boolean) => {
         }
         let cancelled = false
         const timer = setTimeout(() => {
+            // Harper only knows English: no hints on comments in other
+            // languages (e.g. German), instead of flagging every word.
             linter
-                .lint(text, { language: 'plaintext' })
+                .isLikelyEnglish(text)
+                .then((isEnglish) =>
+                    isEnglish
+                        ? linter.lint(text, { language: 'plaintext' })
+                        : []
+                )
                 .then((lints) => {
                     if (cancelled) {
                         return
@@ -105,5 +149,5 @@ export const useWritingHints = (text: string, enabled: boolean) => {
             ? linter.applySuggestion(text, hint.lint, suggestion)
             : Promise.resolve(text)
 
-    return { hints, applyHint }
+    return { hints, applyHint, status }
 }

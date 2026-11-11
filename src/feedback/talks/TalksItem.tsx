@@ -10,6 +10,8 @@ import { useAppSelector } from '../../store'
 import { makeStyles } from '@mui/styles'
 import { useTranslation } from 'react-i18next'
 import type { Talk, Vote } from '../../core/models'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import { accentText } from '../accent'
 
 const useStyles = makeStyles((theme: Theme) => ({
     itemContainer: {
@@ -38,8 +40,25 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'space-between',
         transition: 'all 200ms ease-out',
     },
+    // Full contrast, marked rather than dimmed: a commented talk is not disabled.
     paperSelected: {
-        opacity: 0.5,
+        borderColor: accentText(theme),
+    },
+    footer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: theme.spacing(1),
+    },
+    commented: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
+        color: accentText(theme),
+        whiteSpace: 'nowrap',
+    },
+    commentedIcon: {
+        fontSize: 16,
     },
     talkTitle: {
         wordBreak: 'break-word',
@@ -93,9 +112,22 @@ export const TalksItem = ({ talk, userVote }: TalksItemProps) => {
                     >
                         {talk.title}
                     </Typography>
-                    {speakers && (
-                        <SpeakerList speakers={speakers} size="small" />
-                    )}
+                    <div className={classes.footer}>
+                        {speakers && (
+                            <SpeakerList speakers={speakers} size="small" />
+                        )}
+                        {userVote && (
+                            <Typography
+                                variant="caption"
+                                className={classes.commented}
+                            >
+                                <CheckCircleOutlineIcon
+                                    className={classes.commentedIcon}
+                                />
+                                {t('talks.commented')}
+                            </Typography>
+                        )}
+                    </div>
                 </Paper>
             </Link>
         </Grid>

@@ -19,7 +19,13 @@
             "question": "Une question :",
             "idea": "Une idée :",
             "unclear": "Pourrait être plus clair :"
-        }
+        },
+        "loadingHelp": "Chargement des suggestions d'écriture…",
+        "fixApplied": "Suggestion appliquée.",
+        "undo": "Annuler",
+        "deleteConfirm": "Supprimer votre commentaire ?",
+        "cancel": "Annuler",
+        "agree": "Je suis d'accord avec ce commentaire ({{n}})"
     },
     "vote": {
         "adminNotAnonymous": "Vous êtes connecté à l'admin, le vote ne sera pas anonyme.",
@@ -39,7 +45,8 @@
         "menuNoDate": "Sans date",
         "list": "Afficher la liste des présentations",
         "vote": "Voter pour la présentation ",
-        "date": "Afficher les présentations du "
+        "date": "Afficher les présentations du ",
+        "commented": "Vous avez commenté"
     },
     "footer": {
         "madeBy": "Propulsé par"
