@@ -93,11 +93,6 @@ export const textEllipsis = (
     return [str, false]
 }
 
-export const isValidEmail = (email: unknown) => {
-    const re = /^\S+@\S+$/
-    return re.test(String(email).toLowerCase())
-}
-
 export const isString = (value: unknown): value is string => {
     return typeof value === 'string' || value instanceof String
 }

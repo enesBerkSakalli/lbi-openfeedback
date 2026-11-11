@@ -76,7 +76,7 @@ export const TalkHeader = ({ talk, speakers }: TalkHeaderProps) => {
                 <Typography
                     variant="h2"
                     color="textPrimary"
-                    sx={{ wordBreak: 'break-word' }}
+                    sx={{ wordBreak: 'break-word', textWrap: 'balance' }}
                 >
                     {talk.title}
                     <Box
@@ -91,9 +91,11 @@ export const TalkHeader = ({ talk, speakers }: TalkHeaderProps) => {
                             ))}
                     </Box>
                 </Typography>
-                <Box
-                    fontSize={16}
+                <Typography
+                    variant="body2"
+                    component="p"
                     color={theme.palette.textDimmed}
+                    marginTop={0.5}
                     marginBottom={2}
                 >
                     {talk.startTime &&
@@ -102,7 +104,7 @@ export const TalkHeader = ({ talk, speakers }: TalkHeaderProps) => {
                             talk.endTime,
                             displayFullDates
                         )}
-                </Box>
+                </Typography>
                 <SpeakerList speakers={speakers} />
             </Box>
             <QRCodeButton

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '40px',
     },
     smallText: {
-        fontSize: '12px',
+        fontSize: 14,
         opacity: 0.7,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         '-webkit-box-orient': 'vertical',
     },
     mediumText: {
-        fontSize: '15px',
+        fontSize: 14,
         opacity: 0.7,
     },
 }))

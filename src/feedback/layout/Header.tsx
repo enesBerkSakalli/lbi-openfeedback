@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 import { SearchBar } from './SearchBar.tsx'
 import ArrowBack from '@mui/icons-material/ArrowBack'
 import CalendarToday from '@mui/icons-material/CalendarToday'
@@ -6,10 +6,9 @@ import { grey } from '@mui/material/colors'
 import { darken, type Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import { useTranslation } from 'react-i18next'
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { isInIFrame } from '../utils/isInIFrame'
 import { useQuery } from '../../utils/useQuery'
-import Hidden from '@mui/material/Hidden'
 import type { Project } from '../../core/models'
 
 interface HeaderStyleProps {
@@ -22,21 +21,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxHeight: 60,
         maxWidth: 200,
     },
+    // In the flow, not on top of the logo: the logo centers in what is left.
     iconLeft: {
-        minWidth: 28,
-        position: 'absolute',
-        top: 0,
-        '& a': {
-            padding: 18,
-            display: 'block',
-            transition: 'background-color 200ms',
-            '&:hover': {
-                backgroundColor: darken(theme.palette.pageBackground, 0.2),
-            },
-        },
-        '& svg': {
-            color: theme.palette.textDimmed,
-        },
+        flexShrink: 0,
+        paddingLeft: theme.spacing(1),
+    },
+    backButton: {
+        minHeight: 48,
+        paddingLeft: theme.spacing(1.5),
+        paddingRight: theme.spacing(2),
     },
     iconRight: {
         minWidth: 28,
@@ -63,7 +56,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     boxCenter: {
-        width: '100%',
+        flex: 1,
+        minWidth: 0,
         marginLeft: 'auto',
         marginRight: 'auto',
         justifyContent: 'center',
@@ -87,6 +81,21 @@ const useStyles = makeStyles((theme: Theme) => ({
                 ? 'none'
                 : `0px 1px 15px ${theme.palette.headerShadow}`,
         marginBottom: 20,
+    },
+    // Below lg the event name is not shown, but stays the page's h1 for
+    // screen readers and heading navigation.
+    eventName: {
+        [theme.breakpoints.down('lg')]: {
+            position: 'absolute',
+            width: 1,
+            height: 1,
+            margin: -1,
+            padding: 0,
+            overflow: 'hidden',
+            clip: 'rect(0 0 0 0)',
+            whiteSpace: 'nowrap',
+            border: 0,
+        },
     },
     header: {
         height: 65,
@@ -116,12 +125,14 @@ export const Header = ({ project }: HeaderProps) => {
             <div className={classes.header}>
                 <div className={classes.iconLeft}>
                     {matchParams.talkId && (
-                        <Link
-                            title={t('talks.list')}
+                        <Button
+                            component={RouterLink}
                             to={`/${matchParams.projectId}/${matchParams.date}`}
+                            startIcon={<ArrowBack />}
+                            className={classes.backButton}
                         >
-                            <ArrowBack color="primary" />
-                        </Link>
+                            {t('talks.back')}
+                        </Button>
                     )}
                 </div>
                 <div className={classes.iconRight}>
@@ -142,17 +153,16 @@ export const Header = ({ project }: HeaderProps) => {
                         src={project.logoSmall}
                         alt={`logo ${project.name}`}
                     />
-                    <Hidden lgDown>
-                        <Typography
-                            variant="h1"
-                            color="textPrimary"
-                            aria-label={
-                                project.hideEventName ? project.name : undefined
-                            }
-                        >
-                            {!project.hideEventName && project.name}
-                        </Typography>
-                    </Hidden>
+                    <Typography
+                        variant="h1"
+                        color="textPrimary"
+                        className={classes.eventName}
+                        aria-label={
+                            project.hideEventName ? project.name : undefined
+                        }
+                    >
+                        {!project.hideEventName && project.name}
+                    </Typography>
                 </div>
             </div>
             {!matchParams.talkId && <SearchBar />}

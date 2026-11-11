@@ -8,8 +8,6 @@ import {
     GET_USER_VOTES_SUCCESS,
     REMOVE_VOTE_BEFORE_SUCCESS,
     REMOVE_VOTE_SUCCESS,
-    UPDATE_VOTE_ERROR,
-    UPDATE_VOTE_SUCCESS,
     type VoteAction,
 } from './voteActionTypes'
 import { fireStoreMainInstance, serverTimestamp } from '../../firebase.ts'
@@ -39,10 +37,11 @@ export const voteFor = (
     voteItem: VoteItem,
     data: string | null,
     translate: TFunction
-): AppThunk => {
+): AppThunk<boolean> => {
+    // true once the write started: the caller may then clear its input
     return (dispatch, getState) => {
         if (!isVoteAllowed(dispatch, getState, translate)) {
-            return
+            return false
         }
 
         const project = getProjectSelector(getState())!
@@ -74,7 +73,7 @@ export const voteFor = (
             // A text vote item always sends the text
             voteContent.text = data!.trim()
             if (voteContent.text.length === 0) {
-                return
+                return false
             }
         }
 
@@ -137,6 +136,7 @@ export const voteFor = (
                             : { vote: voteContent, amount: -1 },
                 })
             })
+        return true
     }
 }
 
@@ -215,59 +215,6 @@ export const removeVote = (
             })
     }
 }
-
-export const updateVote =
-    (vote: Vote, data: string, translate: TFunction): AppThunk =>
-    (dispatch, getState) => {
-        if (
-            !isVoteAllowed(dispatch, getState, translate) ||
-            data.trim().length === 0
-        ) {
-            return
-        }
-
-        dispatch({
-            type: INCREMENT_VOTE_LOCALLY,
-            payload: {
-                vote: {
-                    ...vote,
-                    text: data.trim(),
-                },
-            },
-        })
-
-        fireStoreMainInstance
-            .collection('projects')
-            .doc(getProjectSelector(getState())!.id)
-            .collection('userVotes')
-            .doc(vote.id)
-            .update({
-                text: data,
-                updatedAt: serverTimestamp(),
-            })
-            .then(() => {
-                dispatch({
-                    type: UPDATE_VOTE_SUCCESS,
-                    payload: {
-                        vote: {
-                            [vote.id]: {
-                                ...vote,
-                                text: data,
-                            },
-                        },
-                    },
-                })
-            })
-            .catch((error: Error) => {
-                dispatch({
-                    type: UPDATE_VOTE_ERROR,
-                    payload: {
-                        error: error.toString(),
-                        voteId: vote.id,
-                    },
-                })
-            })
-    }
 
 export const getVotes = (): AppThunk => {
     return (dispatch, getState) => {

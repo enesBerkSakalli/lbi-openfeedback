@@ -1,5 +1,4 @@
 import { makeStyles } from '@mui/styles'
-import { COLORS } from '../../constants/colors'
 import { useTranslation } from 'react-i18next'
 import { TALK_NO_DATE } from '../../core/talks/talksUtils'
 import { DateTime, type DateTimeFormatOptions } from 'luxon'
@@ -11,7 +10,7 @@ import type { ReactNode } from 'react'
 
 const useStyles = makeStyles(() => ({
     a: {
-        padding: 10,
+        padding: 12,
         color: 'inherit',
         display: 'block',
     },
@@ -75,11 +74,11 @@ export const TalkDateMenuItem = ({
                     : theme.palette.text.secondary,
                 borderBottom: `2px ${
                     isSelected
-                        ? COLORS.RED_ORANGE
+                        ? theme.palette.primary.main
                         : theme.palette.pageBackground
                 } solid`,
                 '&:hover': {
-                    color: COLORS.RED_ORANGE,
+                    color: theme.palette.primary.main,
                 },
             }}
         >
@@ -87,6 +86,7 @@ export const TalkDateMenuItem = ({
                 to={`${url}`}
                 className={classes.a}
                 title={t('talks.date') + label}
+                aria-current={isSelected ? 'page' : undefined}
             >
                 {label}
             </Link>

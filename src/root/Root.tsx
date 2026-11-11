@@ -1,75 +1,72 @@
 import { useEffect } from 'react'
+import { I18nextProvider, useTranslation } from 'react-i18next'
+import { ThemeProvider } from '@mui/material/styles'
+import { CssBaseline, useMediaQuery } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 import { setFavicon } from '../utils/dom'
-import { Header } from './Header.tsx'
-import { HowItWorks } from './HowItWorks.tsx'
-import { FAQ } from './FAQ.tsx'
-import { I18nextProvider } from 'react-i18next'
 import { i18n } from './translations/i18n'
-import {
-    createTheme,
-    ThemeProvider,
-    StyledEngineProvider,
-} from '@mui/material/styles'
-import { showSmallChat, useSmallchat } from '../admin/project/utils/smallchat'
-import { Footer } from './Footer.tsx'
-import { Contact } from './Contact.tsx'
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
-import { Sponsor } from './Sponsor.tsx'
+import { feedbackThemes } from '../feedback/feedbackTheme'
 
-const theme = createTheme({
-    typography: {
-        h1: {
-            fontSize: 28,
-            fontWeight: 600,
-        },
-        h2: {
-            fontSize: 24,
-            fontWeight: 400,
-        },
-    },
-    palette: {
-        mode: 'light',
-        primary: {
-            light: '#ff9c76',
-            main: '#ff6a49',
-            dark: '#c6381e',
-            contrastText: '#fff',
-        },
-    },
-})
+// The starting page: what this site is and where to go, nothing to sell.
+const StartPage = () => {
+    const { t } = useTranslation()
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL
+
+    return (
+        <Box
+            component="main"
+            sx={{
+                maxWidth: 560,
+                minHeight: '100vh',
+                margin: '0 auto',
+                padding: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                gap: 2,
+            }}
+        >
+            <Typography variant="h1">{t('start.title')}</Typography>
+            <Typography>{t('start.intro')}</Typography>
+            <Typography>{t('start.howTo')}</Typography>
+            <Box marginTop={2}>
+                <Button
+                    variant="outlined"
+                    href="/admin/"
+                    sx={{ minHeight: 48 }}
+                >
+                    {t('start.login')}
+                </Button>
+            </Box>
+            {adminEmail && (
+                <Typography variant="body2" color="textSecondary">
+                    {t('start.questions')}{' '}
+                    <Link href={`mailto:${adminEmail}`}>{adminEmail}</Link>
+                </Typography>
+            )}
+        </Box>
+    )
+}
 
 export const Root = () => {
-    const [scriptLoaded] = useSmallchat()
-    useEffect(() => {
-        setFavicon('/favicon-root.ico')
-    }, [])
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
     useEffect(() => {
-        if (scriptLoaded) {
-            setTimeout(() => {
-                showSmallChat()
-            }, 1000) // defer to let the time to the script to display the help
-        }
-    }, [scriptLoaded])
+        setFavicon('/favicon-root.ico')
+        document.title = i18n.t('start.title')
+    }, [])
 
     return (
         <I18nextProvider i18n={i18n}>
-            <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={theme}>
-                    <GoogleReCaptchaProvider
-                        reCaptchaKey={import.meta.env.VITE_RECAPTCHAV3_SITE_KEY}
-                    >
-                        <Header />
-                        <main>
-                            <HowItWorks />
-                            <Sponsor />
-                            <FAQ />
-                            <Contact />
-                        </main>
-                        <Footer />
-                    </GoogleReCaptchaProvider>
-                </ThemeProvider>
-            </StyledEngineProvider>
+            <ThemeProvider
+                theme={feedbackThemes[prefersDarkMode ? 'dark' : 'light']}
+            >
+                <CssBaseline />
+                <StartPage />
+            </ThemeProvider>
         </I18nextProvider>
     )
 }

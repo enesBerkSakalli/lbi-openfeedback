@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
             props.isSmall ? 58 : 'none',
     },
     exceeding: {
-        fontSize: '12px',
+        fontSize: 14,
     },
 }))
 

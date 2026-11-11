@@ -62,8 +62,6 @@ jobs:
             cat > functions/.env.local <<'EOF'
             APP_ENV=test
             APP_URL=http://127.0.0.1:3000
-            APP_CONTACTEMAIL=e2e@example.com
-            APP_RECAPTCHAV3SECRET=e2e-placeholder
             MAILGUN_DOMAIN=example.com
             MAILGUN_KEY=e2e-placeholder
             MAILGUN_API=http://127.0.0.1:9/messages

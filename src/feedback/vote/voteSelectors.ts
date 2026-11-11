@@ -1,6 +1,11 @@
 import { createAppSelector, type RootState } from '../../store'
 import { getSelectedTalkIdSelector } from '../talk/core/talkSelectors'
-import { VOTE_STATUS_ACTIVE, VOTE_STATUS_HIDDEN } from '../../core/contants'
+import {
+    VOTE_STATUS_ACTIVE,
+    VOTE_STATUS_DELETED,
+    VOTE_STATUS_HIDDEN,
+    VOTE_TYPE_TEXT_PLUS,
+} from '../../core/contants'
 import type { Vote } from '../../core/models'
 
 /** User votes keyed by vote item id. */
@@ -66,9 +71,17 @@ export const getVotesByTalkSelector = createAppSelector(
     getCurrentUserVotesSelector,
     (votes) => {
         const result: Record<string, Vote> = {}
-        Object.values(votes).forEach((vote) => {
-            result[vote.talkId] = vote
-        })
+        Object.values(votes)
+            // Neither a deleted comment nor a 👍 on someone else's comment
+            // marks the talk as commented
+            .filter(
+                (vote) =>
+                    vote.status !== VOTE_STATUS_DELETED &&
+                    vote.voteType !== VOTE_TYPE_TEXT_PLUS
+            )
+            .forEach((vote) => {
+                result[vote.talkId] = vote
+            })
         return result
     }
 )

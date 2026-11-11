@@ -15,5 +15,4 @@ export { deleteProject } from './callable/deleteProject'
 export { deleteOrganization } from './callable/deleteOrganization'
 
 // Http request
-export { sendContactEmail } from './http/sendContactEmail'
 export { api } from './http/apiFunction'

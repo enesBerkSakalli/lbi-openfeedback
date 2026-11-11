@@ -13,13 +13,14 @@ import type { VoteResult } from './core/getVoteResultSelectorSelector'
 
 /**
  * Called when the user votes on a vote item. `vote` is the user existing vote
- * to update or remove, `data` the text of a text vote.
+ * to remove, `data` the text of a text vote. Returns true once a new vote is
+ * being saved (false when it was refused, e.g. before the sign-in ends).
  */
 export type OnVoteChange = (
     voteItem: VoteItem,
     data: string | null,
     vote?: Vote | null
-) => void
+) => boolean
 
 interface TalkVoteProps {
     voteItem: VoteItem
@@ -62,7 +63,6 @@ export const TalkVote = ({
                     voteResult={
                         Array.isArray(voteResult) ? voteResult : undefined
                     }
-                    chipColors={chipColors}
                 />
             )
         case VOTE_TYPE_TITLE:

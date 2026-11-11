@@ -40,7 +40,7 @@ export const TalksDateMenu = () => {
     }
 
     return (
-        <>
+        <nav aria-label={t('talks.dates')}>
             <ul className={classes.menu}>
                 {items.map(({ page, type, selected }, index) => {
                     let children = null
@@ -72,6 +72,6 @@ export const TalksDateMenu = () => {
                     return <li key={index}>{children}</li>
                 })}
             </ul>
-        </>
+        </nav>
     )
 }

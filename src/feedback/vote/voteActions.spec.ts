@@ -3,6 +3,7 @@ import { removeVote, voteFor } from './voteActions'
 import { voteReducer, type VoteState } from './voteReducer'
 import { projectReducer, type ProjectState } from '../project/projectReducer'
 import { getVoteId } from './getVoteId'
+import { isVoteAllowed } from './actions/isVoteAllowed'
 import {
     VOTE_STATUS_ACTIVE,
     VOTE_STATUS_DELETED,
@@ -35,7 +36,9 @@ vi.mock('../../firebase.ts', () => ({
     },
 }))
 vi.mock('./getVoteId', () => ({ getVoteId: vi.fn() }))
-vi.mock('./actions/isVoteAllowed', () => ({ isVoteAllowed: () => true }))
+vi.mock('./actions/isVoteAllowed', () => ({
+    isVoteAllowed: vi.fn(() => true),
+}))
 vi.mock('./voteSelectors', () => ({
     getCurrentUserVotesSelector: (state: RootState) =>
         state.votes.currentUserVotes,
@@ -128,6 +131,27 @@ beforeEach(() => {
     firestoreSet.mockReset()
     firestoreSet.mockRejectedValue(new Error('offline'))
     vi.spyOn(console, 'error').mockImplementation(() => undefined)
+})
+
+describe('voteFor result', () => {
+    // The comment field keeps the text unless the write started
+    test('is false when the vote is refused, true once it is saving', () => {
+        vi.mocked(getVoteId).mockReturnValue(['new-id'])
+        const store = createStore({})
+        const send = () =>
+            voteFor(
+                't1',
+                textItem,
+                'A question',
+                translate
+            )(store.dispatch, store.getState, undefined)
+
+        vi.mocked(isVoteAllowed).mockReturnValueOnce(false)
+        expect(send()).toBe(false)
+        expect(store.votes()).toEqual({})
+
+        expect(send()).toBe(true)
+    })
 })
 
 describe('voteFor write failure', () => {

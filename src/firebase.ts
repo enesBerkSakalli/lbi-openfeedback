@@ -35,11 +35,6 @@ export const functions = {
         .functions()
         .httpsCallable('deleteOrganization'),
 }
-export const HttpsFunctionsUrl = {
-    sendContactEmail: isUsingEmulators
-        ? `http://127.0.0.1:5001/${config.projectId}/us-central1/sendContactEmail`
-        : `https://us-central1-${config.projectId}.cloudfunctions.net/sendContactEmail`,
-}
 authProvider.useDeviceLanguage()
 
 if (import.meta.env.PROD) {

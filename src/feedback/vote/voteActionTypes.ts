@@ -10,8 +10,6 @@ export const GET_USER_VOTES_SUCCESS = 'vote/getUserVote/success'
 export const GET_USER_VOTES_ERROR = 'vote/getUserVote/error'
 export const DELETE_VOTE_POST_ERROR = 'vote/delete/postError'
 export const DELETE_VOTE_LOAD_ERROR = 'vote/delete/loadError'
-export const UPDATE_VOTE_SUCCESS = 'vote/update/success'
-export const UPDATE_VOTE_ERROR = 'vote/update/error'
 
 /** Also handled by the project reducer. */
 export type AddVoteSuccessAction = {
@@ -40,8 +38,3 @@ export type VoteAction =
       }
     | { type: typeof DELETE_VOTE_POST_ERROR }
     | { type: typeof DELETE_VOTE_LOAD_ERROR }
-    | { type: typeof UPDATE_VOTE_SUCCESS; payload: { vote: VotesMap } }
-    | {
-          type: typeof UPDATE_VOTE_ERROR
-          payload: { error: string; voteId: string }
-      }

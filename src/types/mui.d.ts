@@ -9,6 +9,8 @@ interface OpenFeedbackPalette {
     textVoteTitle: string
     textVoteTitleShadow: string
     textDimmed: string
+    /** Neobrutalist borders and hard shadows. */
+    ink: string
 }
 
 declare module '@mui/material/styles' {

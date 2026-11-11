@@ -47,6 +47,8 @@ export const SearchBar = () => {
                     className={classes.input}
                     placeholder={t('searchPlaceholder')}
                     fullWidth
+                    type="search"
+                    inputProps={{ 'aria-label': t('searchPlaceholder') }}
                     onChange={(event) =>
                         dispatch(setTalksFilter(event.target.value))
                     }

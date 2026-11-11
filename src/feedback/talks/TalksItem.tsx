@@ -1,48 +1,47 @@
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
+import Card from '@mui/material/Card'
+import CardActionArea from '@mui/material/CardActionArea'
 import { Link } from 'react-router-dom'
 import { getSpeakersListSelector } from '../../core/speakers/speakerSelectors'
 import { SpeakerList } from '../speaker/SpeakerList.tsx'
 import { getDateFromStartTime } from '../../core/talks/talksUtils'
 import { getProjectIdSelector } from '../project/projectSelectors'
-import { darken, lighten, type Theme, Typography } from '@mui/material'
+import { type Theme, Typography } from '@mui/material'
 import { useAppSelector } from '../../store'
 import { makeStyles } from '@mui/styles'
 import { useTranslation } from 'react-i18next'
 import type { Talk, Vote } from '../../core/models'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import { accentText } from '../accent'
 
 const useStyles = makeStyles((theme: Theme) => ({
     itemContainer: {
         margin: -1,
     },
-    paper: {
+    card: {
+        borderRadius: 12,
+        backgroundColor: theme.palette.background.default,
+        border: `2px solid ${theme.palette.ink}`,
+        boxShadow: `4px 4px 0 ${theme.palette.ink}`,
+        height: 150,
+        transition: 'transform 120ms ease-out, box-shadow 120ms ease-out',
+        '&:hover': {
+            transform: 'translate(-1px, -1px)',
+            boxShadow: `5px 5px 0 ${theme.palette.ink}`,
+        },
+    },
+    action: {
+        height: '100%',
         padding: theme.spacing(2),
         textAlign: 'center',
-        fontSize: '17px',
-        boxShadow: 'none',
-        borderRadius: '0',
-        backgroundColor: theme.palette.background.default,
-        color: theme.palette.text.secondary,
-        border: '1px solid ' + theme.palette.grey[300],
-        height: '150px',
-        boxSizing: 'border-box',
-        '&:hover': {
-            backgroundColor:
-                theme.palette.mode === 'dark'
-                    ? lighten(theme.palette.background.default, 0.2)
-                    : darken(theme.palette.background.default, 0.05),
-            cursor: 'pointer',
-        },
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'stretch',
         justifyContent: 'space-between',
-        transition: 'all 200ms ease-out',
     },
     // Full contrast, marked rather than dimmed: a commented talk is not disabled.
     paperSelected: {
-        borderColor: accentText(theme),
+        borderColor: theme.palette.primary.main,
+        boxShadow: `4px 4px 0 ${theme.palette.primary.main}`,
     },
     footer: {
         display: 'flex',
@@ -54,7 +53,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
-        color: accentText(theme),
         whiteSpace: 'nowrap',
     },
     commentedIcon: {
@@ -67,9 +65,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: '-webkit-box',
         '-webkit-line-clamp': 2,
         '-webkit-box-orient': 'vertical',
-    },
-    a: {
-        display: 'block',
     },
 }))
 
@@ -84,9 +79,6 @@ export const TalksItem = ({ talk, userVote }: TalksItemProps) => {
     const { t } = useTranslation()
     const speakersEntities = useAppSelector(getSpeakersListSelector)
     const currentProjectId = useAppSelector(getProjectIdSelector)
-    const itemClasses = `${classes.paper} ${
-        userVote ? classes.paperSelected : ''
-    }`
 
     const speakers =
         talk.speakers &&
@@ -100,12 +92,17 @@ export const TalksItem = ({ talk, userVote }: TalksItemProps) => {
             md={4}
             className={`${classes.itemContainer} talk`}
         >
-            <Link
-                to={`/${currentProjectId}/${date}/${talk.id}`}
-                title={t('talks.vote') + talk.title}
-                className={classes.a}
+            <Card
+                variant="outlined"
+                className={`${classes.card} ${
+                    userVote ? classes.paperSelected : ''
+                }`}
             >
-                <Paper className={itemClasses}>
+                <CardActionArea
+                    component={Link}
+                    to={`/${currentProjectId}/${date}/${talk.id}`}
+                    className={classes.action}
+                >
                     <Typography
                         color="textPrimary"
                         className={classes.talkTitle}
@@ -119,6 +116,7 @@ export const TalksItem = ({ talk, userVote }: TalksItemProps) => {
                         {userVote && (
                             <Typography
                                 variant="caption"
+                                color="primary"
                                 className={classes.commented}
                             >
                                 <CheckCircleOutlineIcon
@@ -128,8 +126,8 @@ export const TalksItem = ({ talk, userVote }: TalksItemProps) => {
                             </Typography>
                         )}
                     </div>
-                </Paper>
-            </Link>
+                </CardActionArea>
+            </Card>
         </Grid>
     )
 }

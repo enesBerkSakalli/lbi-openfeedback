@@ -13,7 +13,6 @@ import {
     removeVote,
     removeVoteLoadError,
     removeVotePostError,
-    updateVote,
     voteFor,
 } from '../vote/voteActions'
 
@@ -34,7 +33,6 @@ import { LoaderMatchParent } from '../../baseComponents/customComponent/LoaderMa
 import { Error } from '../../baseComponents/customComponent/Error.tsx'
 import { Snackbar } from '../../baseComponents/customComponent/Snackbar.tsx'
 import { SPACING } from '../../constants/constants'
-import { VOTE_TYPE_BOOLEAN, VOTE_TYPE_TEXT } from '../../core/contants'
 import { useTranslation } from 'react-i18next'
 import { TalkHeader } from './TalkHeader.tsx'
 import { getVoteResultSelectorSelector } from './core/getVoteResultSelectorSelector'
@@ -43,10 +41,12 @@ import {
     type VotedOnTalkAtLoad,
 } from './core/voteResultsVisibility'
 import { useQuery } from '../../utils/useQuery'
-import { useParams } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import ArrowBack from '@mui/icons-material/ArrowBack'
 
 export const Talk = () => {
-    const { talkId } = useParams()
+    const { talkId, projectId, date } = useParams()
     const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const displayVotes = useQuery().get('displayVotes')
@@ -129,24 +129,14 @@ export const Talk = () => {
         return <LoaderMatchParent />
     }
 
+    // A given vote is removed (an unticked boolean, a deleted comment);
+    // otherwise a new vote is cast. Comments are never edited in place.
     const onVoteItemChange: OnVoteChange = (voteItem, data, vote) => {
         if (vote) {
-            switch (voteItem.type) {
-                case VOTE_TYPE_TEXT:
-                    if (data && data.length > 0) {
-                        dispatch(updateVote(vote, data, t))
-                    } else {
-                        dispatch(removeVote(vote, t))
-                    }
-                    break
-                default:
-                case VOTE_TYPE_BOOLEAN:
-                    dispatch(removeVote(vote, t))
-                    break
-            }
-        } else {
-            dispatch(voteFor(talk.id, voteItem, data, t))
+            dispatch(removeVote(vote, t))
+            return false
         }
+        return dispatch(voteFor(talk.id, voteItem, data, t))
     }
 
     let snackBarError: ReactNode = null
@@ -186,6 +176,20 @@ export const Talk = () => {
                     />
                 ))}
             </Grid>
+            {/* Within thumb reach on phones, unlike the header button */}
+            <Button
+                component={RouterLink}
+                to={`/${projectId}/${date}`}
+                startIcon={<ArrowBack />}
+                variant="outlined"
+                fullWidth
+                sx={{
+                    minHeight: 48,
+                    marginBottom: 4,
+                }}
+            >
+                {t('talks.back')}
+            </Button>
             {snackBarError}
         </div>
     )

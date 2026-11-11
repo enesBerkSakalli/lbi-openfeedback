@@ -1,56 +1,9 @@
 {
-    "menu": {
-        "howitworks": "Comment ça marche",
-        "faq": "FAQ",
-        "login": "Connexion | Inscription"
-    },
-    "home": {
-        "title": "Collectez des feedbacks facilement",
-        "subtitle": "Solution idéale pour les conférences, meetups, évènement, séminaire, formation et bien plus",
-        "headerAction": "Créez votre évènement maintenant",
-        "headerActionDemo": "Démo",
-        "howItWorks": "Comment ça marche",
-        "3clicks": "Créez votre évènement en 3 cliques, ajoutez les présentations et les orat·eurs·rices manuellement ou connectez OpenFeedback à votre API.",
-        "scan": "Partagez un QR Code avec les participants (pendant un Q&A ou les pauses par ex)",
-        "vote": "Les participants votent n'importe quand, vous n'avez rien à faire de plus.",
-        "compatibleHoverboard": "Aussi compatible avec"
-    },
-    "faq": {
-        "scale": "Est-ce que OpenFeedback scale ? Le service est il fiable ?",
-        "scaleAnswer": "OpenFeedback est hébergé sur Firebase/Google Cloud Platform avec un pricing facturé à l'utilisation. Cela signifie que l'infrastucture s'adaptera à la charge sans soucis. <br/><br/> OpenFeedback a déjà été utilisé par Sunny Tech et BDX.io sans problème avec 300 votants et 1600 votes chacun en deux jours. Le service est testé à chaque modification.",
-        "accurate": "Est-ce que le décompte des votes est précis ?",
-        "accurateAnswer": "Pas vraiment. Le décompte devrait être proche à 98%.<br/>Dans la plupart des cas, cela ne devrait pas être un problème mais si vous avez besoin du décompte réel,  il peut être recalculé après l'évènement. <br/> <br/> Contactez {{adminEmail}} si besoin.",
-        "price": "Combien ça coûte ?",
-        "priceAnswer": "Open Feedback est pour l'instant gratuit pour tout le monde. <br/><br/>Quand le service sera plus utilisé, il y aura peut-être un plan payant mais il sera toujours gratuit pour les associations ou organisations à but non-lucratif.",
-        "voteIncrease": "Comment augmenter le nombre de vote ?",
-        "voteIncreaseAnswer": "La communication est la clé pour récolter beaucoup de votes. <br/> <br/> <strong>Voici quelques astuces :</strong><br/> - affichez un QR Code sur les murs, votre site internet, un plan/flyer<br/> - prévenez les participants de voter après l'évènement. N'oubliez pas de retarder la fermeture des votes en fonction. <br/> - promouvoir OpenFeedback à tous les orat·eurs·rices pour qu'ils affichent un QRCode allant directement sur leur page pendant leur Q&A.",
-        "private": "Est-ce que les évènements sont privés ?",
-        "privateAnswser": "Pour l'instant tous les évènements ont un identifiant unique qui n'est pas facile à trouver/deviner. Il ne dépend que de vous de le garder privé si besoin.",
-        "newFeature": "Comment demander une nouvelle fonctionalité ?",
-        "newFeatureAnwser": "Envoyez un email à {{adminEmail}} ou ouvrez une issue sur ",
-        "newFeatureAnwserBis": " Vous pouvez trouver les prochaines fonctionnalités qui arriveront sur OpenFeedback ",
-        "newFeatureAnwserBisHere": "ici",
-        "additionalSupport": "Une autre question ? Contactez {{adminEmail}}",
-        "custom": "Intégration d'OpenFeedback dans vos apps ? (API access)",
-        "customAnswer": "N'importe qui peut ajouter OpenFeedback dans ses applications. Vous pouvez créer votre propre instance d'OpenFeedback sur Firebase et utiliser Firestore SDK (android/ios/web) pour faire l'intégration. <br/><br/> Sur demande, une documentation pour l'intégration peut être envoyée. L'équipe d'OpenFeedback devrait valider l'intégration pour s'assurer que tout marchera comme prévu le jour J. <br/> <br/> Vous pouvez trouver des SDK Open Source réalisé par la communauté sur ",
-        "customAnswerSDKLink": "la page GitHub."
-    },
-    "contact": {
-        "title": "Contact",
-        "email": "Email",
-        "message": "Message",
-        "emailError": "Email invalid",
-        "error": "Erreur lors de l'envoi du message: ",
-        "success": "Message envoyé 🚀",
-        "submit": "Envoyer"
-    },
-    "sponsor": {
-        "title": "Sponsor",
-        "description": "Les sponsors aident à garder le projet en vie et à l'améliorer.",
-        "becomeSponsor": "Devenir sponsor"
-    },
-    "footer": {
-        "about": "À propos",
-        "contact": "Contact"
+    "start": {
+        "title": "Retours LBI",
+        "intro": "Retours anonymes, questions et idées sur les présentations du Ludwig Boltzmann Institute.",
+        "howTo": "Pour donner votre avis, scannez le QR code affiché au séminaire ou ouvrez le lien de l’e-mail du séminaire. Aucune connexion nécessaire.",
+        "login": "Connexion organisateur",
+        "questions": "Questions :"
     }
 }

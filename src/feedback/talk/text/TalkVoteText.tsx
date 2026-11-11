@@ -1,33 +1,24 @@
-import {
-    type ChangeEvent,
-    type KeyboardEvent,
-    useEffect,
-    useRef,
-    useState,
-} from 'react'
-import { darken, type Theme } from '@mui/material'
+import { type ChangeEvent, type KeyboardEvent, useRef, useState } from 'react'
+import type { Theme } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import SendIcon from '@mui/icons-material/Send'
-import DeleteIcon from '@mui/icons-material/Delete'
-import InfoIcon from '@mui/icons-material/Info'
 import LockIcon from '@mui/icons-material/Lock'
 import SpellcheckIcon from '@mui/icons-material/Spellcheck'
 import UndoIcon from '@mui/icons-material/Undo'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
+import Alert from '@mui/material/Alert'
 import { TalkVoteTextResult } from './TalkVoteTextResult.tsx'
 import { Trans, useTranslation } from 'react-i18next'
 import { VOTE_STATUS_HIDDEN, VOTE_TYPE_TEXT_PLUS } from '../../../core/contants'
-import { HEX_COLORS } from '../../../constants/colors'
 import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
-import type { Vote, VoteItem, VoteStatus } from '../../../core/models'
+import type { Vote, VoteItem } from '../../../core/models'
 import type { OnVoteChange } from '../TalkVote.tsx'
 import type { TextVoteResult } from '../core/getVoteResultSelectorSelector'
 import { insertStarter } from './insertStarter'
 import { useWritingHints } from './useWritingHints'
-import { accentFill, accentText } from '../../accent'
 
 const MAX_COMMENT_LENGTH = 1000
 const STARTER_KEYS = ['liked', 'question', 'idea', 'unclear'] as const
@@ -86,8 +77,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     fixChip: {
         height: 40,
         borderRadius: 20,
-        color: accentText(theme),
-        borderColor: accentText(theme),
     },
     undoRow: {
         display: 'flex',
@@ -112,34 +101,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     actionButton: {
         minHeight: TOUCH_TARGET,
-        color: accentText(theme),
     },
     sendButton: {
         minHeight: TOUCH_TARGET,
         marginLeft: 'auto',
-        backgroundColor: accentFill(theme),
-        color: theme.palette.common.white,
-        '&:hover': {
-            backgroundColor: darken(accentFill(theme), 0.15),
-        },
-        '&.Mui-disabled': {
-            backgroundColor: theme.palette.action.disabledBackground,
-            color: theme.palette.action.disabled,
-        },
     },
     leftIcon: {
         marginRight: theme.spacing(1),
         fontSize: 20,
     },
     voteHidden: {
-        padding: 10,
-        background: HEX_COLORS.RED_ORANGE,
-        color: 'white',
         margin: '16px 0',
-        borderRadius: 6,
-    },
-    voteHiddenIcon: {
-        verticalAlign: 'text-bottom',
     },
 }))
 
@@ -149,15 +121,6 @@ interface TalkVoteTextProps {
     onVoteChange: OnVoteChange
     voteItem: VoteItem
     voteResult?: TextVoteResult[]
-    chipColors?: string[]
-}
-
-interface TextVoteFormState {
-    comment: string
-    status: VoteStatus | null
-    dataLoaded: boolean
-    /** The user text vote being edited. */
-    vote?: Vote | null
 }
 
 export const TalkVoteText = ({
@@ -165,44 +128,16 @@ export const TalkVoteText = ({
     onVoteChange,
     voteItem,
     voteResult,
-    chipColors,
 }: TalkVoteTextProps) => {
     const { t } = useTranslation()
     const classes = useStyles()
     const inputRef = useRef<HTMLTextAreaElement>(null)
     const [isWriting, setWriting] = useState(false)
-    const [isConfirmingDelete, setConfirmingDelete] = useState(false)
     /** The comment before the last applied writing fix, for Undo. */
     const [beforeFix, setBeforeFix] = useState<string | null>(null)
-    const [data, setData] = useState<TextVoteFormState>({
-        comment: '',
-        status: null,
-        dataLoaded: false,
-    })
-    const { hints, applyHint, status } = useWritingHints(
-        data.comment,
-        isWriting
-    )
-
-    useEffect(() => {
-        if (currentUserVotes && (!data.dataLoaded || !data.vote)) {
-            const foundTextVote = currentUserVotes.find(
-                (vote): vote is Vote & { text: string } =>
-                    !!vote.text && vote.voteType !== VOTE_TYPE_TEXT_PLUS
-            )
-            if (foundTextVote) {
-                setData({
-                    dataLoaded: true,
-                    comment: foundTextVote.text,
-                    status: foundTextVote.status,
-                    vote: foundTextVote,
-                })
-            }
-        }
-    }, [currentUserVotes, data.vote, data.dataLoaded])
-
-    const setComment = (comment: string) =>
-        setData((previous) => ({ ...previous, comment }))
+    // Always a new comment: a person may leave several
+    const [comment, setComment] = useState('')
+    const { hints, applyHint, status } = useWritingHints(comment, isWriting)
 
     const onTextChange = (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -213,7 +148,7 @@ export const TalkVoteText = ({
 
     const onStarterClick = (starter: string) => {
         setBeforeFix(null)
-        setComment(insertStarter(data.comment, starter))
+        setComment(insertStarter(comment, starter))
         setWriting(true)
         inputRef.current?.focus()
     }
@@ -225,26 +160,21 @@ export const TalkVoteText = ({
         }
     }
 
-    const onVoteDelete = () => {
-        setConfirmingDelete(false)
-        setBeforeFix(null)
-        setData({
-            ...data,
-            comment: '',
-            status: null,
-            vote: null,
-        })
-        if (data.vote) {
-            onVoteChange(voteItem, null, data.vote)
+    const canSend = comment.trim().length > 0
+    const onSend = () => {
+        // Cleared only once saving started: a refused send keeps the text
+        if (canSend && onVoteChange(voteItem, comment)) {
+            setComment('')
+            setBeforeFix(null)
         }
     }
 
-    const canSend = data.comment.trim().length > 0
-    const onSend = () => {
-        if (canSend) {
-            onVoteChange(voteItem, data.comment)
-        }
-    }
+    const hasHiddenComment = !!currentUserVotes?.some(
+        (vote) =>
+            !!vote.text &&
+            vote.voteType !== VOTE_TYPE_TEXT_PLUS &&
+            vote.status === VOTE_STATUS_HIDDEN
+    )
 
     const onKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
@@ -252,9 +182,6 @@ export const TalkVoteText = ({
             onSend()
         }
     }
-
-    const sendKey =
-        currentUserVotes && data.dataLoaded ? 'comment.update' : 'comment.send'
 
     return (
         <Grid
@@ -292,7 +219,7 @@ export const TalkVoteText = ({
                 onChange={onTextChange}
                 onFocus={() => setWriting(true)}
                 onKeyDown={onKeyDown}
-                value={data.comment}
+                value={comment}
                 inputRef={inputRef}
                 inputProps={{
                     maxLength: MAX_COMMENT_LENGTH,
@@ -310,7 +237,7 @@ export const TalkVoteText = ({
                     color="textSecondary"
                     className={classes.counter}
                 >
-                    {data.comment.length}/{MAX_COMMENT_LENGTH}
+                    {comment.length}/{MAX_COMMENT_LENGTH}
                 </Typography>
             </div>
 
@@ -347,6 +274,7 @@ export const TalkVoteText = ({
                                             <Chip
                                                 key={suggestionIndex}
                                                 className={classes.fixChip}
+                                                color="primary"
                                                 variant="outlined"
                                                 label={
                                                     replacement ||
@@ -355,7 +283,7 @@ export const TalkVoteText = ({
                                                     })
                                                 }
                                                 onClick={() => {
-                                                    const before = data.comment
+                                                    const before = comment
                                                     applyHint(
                                                         hint,
                                                         suggestion
@@ -389,54 +317,23 @@ export const TalkVoteText = ({
                 </div>
             )}
 
-            {data.status && data.status === VOTE_STATUS_HIDDEN && (
-                <div className={classes.voteHidden}>
-                    <InfoIcon className={classes.voteHiddenIcon} />
+            {hasHiddenComment && (
+                <Alert severity="info" className={classes.voteHidden}>
                     <Trans i18nKey="comment.hidden" />
-                </div>
+                </Alert>
             )}
 
             <div className={classes.buttonContainer}>
-                {data.vote && !isConfirmingDelete && (
-                    <Button
-                        className={classes.actionButton}
-                        onClick={() => setConfirmingDelete(true)}
-                    >
-                        <DeleteIcon className={classes.leftIcon} />
-                        <Trans i18nKey="comment.delete">Delete comment</Trans>
-                    </Button>
-                )}
-                {data.vote && isConfirmingDelete && (
-                    <>
-                        <Typography variant="body2" color="textPrimary">
-                            <Trans i18nKey="comment.deleteConfirm" />
-                        </Typography>
-                        <Button
-                            className={classes.actionButton}
-                            onClick={() => setConfirmingDelete(false)}
-                        >
-                            <Trans i18nKey="comment.cancel" />
-                        </Button>
-                        <Button
-                            className={classes.actionButton}
-                            color="error"
-                            onClick={onVoteDelete}
-                        >
-                            <DeleteIcon className={classes.leftIcon} />
-                            <Trans i18nKey="comment.delete" />
-                        </Button>
-                    </>
-                )}
-
                 <Button
                     variant="contained"
+                    color="primary"
                     disableElevation
                     className={classes.sendButton}
                     disabled={!canSend}
                     onClick={onSend}
                 >
                     <SendIcon className={classes.leftIcon} />
-                    <Trans i18nKey={sendKey} />
+                    <Trans i18nKey="comment.send" />
                 </Button>
             </div>
 
@@ -444,8 +341,8 @@ export const TalkVoteText = ({
                 <TalkVoteTextResult
                     result={voteResult}
                     voteItem={voteItem}
-                    chipColors={chipColors}
                     currentUserVotes={currentUserVotes}
+                    onDelete={(vote) => onVoteChange(voteItem, null, vote)}
                 />
             )}
         </Grid>

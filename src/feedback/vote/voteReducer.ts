@@ -8,8 +8,6 @@ import {
     GET_USER_VOTES_SUCCESS,
     REMOVE_VOTE_BEFORE_SUCCESS,
     REMOVE_VOTE_SUCCESS,
-    UPDATE_VOTE_ERROR,
-    UPDATE_VOTE_SUCCESS,
     type VoteAction,
 } from './voteActionTypes'
 import { VOTE_STATUS_DELETED } from '../../core/contants'
@@ -139,19 +137,6 @@ export const voteReducer = (
             return {
                 ...state,
                 errorVotesLoad: null,
-            }
-        case UPDATE_VOTE_SUCCESS:
-            return {
-                ...state,
-                currentUserVotes: {
-                    ...state.currentUserVotes,
-                    ...action.payload.vote,
-                },
-            }
-        case UPDATE_VOTE_ERROR:
-            return {
-                ...state,
-                errorVotePost: action.payload.error.toString(),
             }
         default:
             return state

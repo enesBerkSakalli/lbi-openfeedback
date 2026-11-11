@@ -5,8 +5,6 @@ import type { OpsGenieEnv } from '../types/OpsGenieEnv'
 export const getAppEnv = (): AppEnv => {
     const appEnv = process.env.APP_ENV
     const appUrl = process.env.APP_URL
-    const contactEmail = process.env.APP_CONTACTEMAIL
-    const recaptchaSecret = process.env.APP_RECAPTCHAV3SECRET
 
     if (!appEnv) {
         throw new Error('APP_ENV is not defined in environment variables')
@@ -17,8 +15,6 @@ export const getAppEnv = (): AppEnv => {
     return {
         env: appEnv,
         url: appUrl,
-        contactEmail: contactEmail,
-        recaptchaV3Secret: recaptchaSecret,
     }
 }
 

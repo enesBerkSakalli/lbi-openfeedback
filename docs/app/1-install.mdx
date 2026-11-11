@@ -73,8 +73,6 @@ Mailgun section above for how Firebase loads them):
 - The application URL: `APP_URL` (ex: `http://localhost:3000`)
 - The OpsGenie API key: `OPSGENIE_KEY`
 - The OpsGenie api domain: `OPSGENIE_API`
-- For contact email (optional): `APP_CONTACTEMAIL`
-- For contact email captcha, the recaptcha V3 Secret: `APP_RECAPTCHAV3SECRET`
 
 Example additions to `functions/.env.local`:
 
@@ -111,10 +109,11 @@ npm i
 
 And then create `functions/.env.<your-project-id>` yourself (the functions
 read directly from `process.env`, so the Firebase CLI will not generate it for
-you) and add the admin contact email:
+you) with at least the app environment and URL:
 
 ```
-APP_CONTACTEMAIL=<ADMIN_EMAIL>
+APP_ENV=production
+APP_URL=<APP_URL>
 ```
 
 The next deploy will also deploy Firebase Cloud Functions

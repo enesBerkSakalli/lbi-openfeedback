@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { array, bool, object, string } from 'yup'
 import { Field, Form, Formik } from 'formik'
 import { OFFormControl } from '../../../baseComponents/form/formControl/OFFormControl.tsx'
@@ -14,7 +13,6 @@ import Box from '@mui/material/Box'
 import { langMapArray } from '../../utils/convertLangMapArray'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { OFSwitch } from '../../../baseComponents/form/switch/OFSwitch.tsx'
-import { DonateToActivateDialog } from '../../../baseComponents/DonateToActivateDialog.tsx'
 import type { LanguageMappingWithTag } from '../../utils/convertLangMapArray'
 
 interface SettingsFormValues {
@@ -56,7 +54,6 @@ export const SettingsForm = ({
     displayFullDates = false,
 }: SettingsFormProps) => {
     const { t } = useTranslation()
-    const [donationDialogOpen, setDonationDialogOpen] = useState(false)
 
     return (
         <>
@@ -164,15 +161,6 @@ export const SettingsForm = ({
                                                 <Field
                                                     name="liveUserVotes"
                                                     component={OFSwitch}
-                                                    onClick={() => {
-                                                        if (
-                                                            !values.liveUserVotes
-                                                        ) {
-                                                            setDonationDialogOpen(
-                                                                true
-                                                            )
-                                                        }
-                                                    }}
                                                 />
                                             }
                                         />
@@ -222,12 +210,6 @@ export const SettingsForm = ({
                     </Form>
                 )}
             </Formik>
-            {donationDialogOpen && (
-                <DonateToActivateDialog
-                    isDialogOpen={donationDialogOpen}
-                    onClose={() => setDonationDialogOpen(false)}
-                />
-            )}
         </>
     )
 }

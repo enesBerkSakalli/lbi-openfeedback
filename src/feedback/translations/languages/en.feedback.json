@@ -1,14 +1,10 @@
 {
     "common": {
-        "loading": "Loading",
-        "donate": "Donate",
-        "becomeSponsor": "Become a sponsor"
+        "loading": "Loading"
     },
     "comment": {
         "placeholder": "What did you think? Questions, ideas or anything you noticed…",
         "delete": "Delete",
-        "update": "Update",
-        "save": "Save",
         "hidden": "Your vote has been hidden by the event organizer. Contact them for more information",
         "send": "Send anonymously",
         "anonymousHint": "Anonymous: no login needed. Others can see your comment.",
@@ -25,14 +21,15 @@
         "undo": "Undo",
         "deleteConfirm": "Delete your comment?",
         "cancel": "Cancel",
-        "agree": "Agree with this comment ({{n}})"
+        "agree": "Agree with this comment ({{n}})",
+        "you": "You",
+        "person": "Person {{n}}"
     },
     "vote": {
         "adminNotAnonymous": "You are logged in to the admin, your vote will not be anonymous.",
         "rangePassed": "Unable to save the vote, the vote period has passed.",
         "rangeNotReached": "You cannot vote before the ",
-        "notLoggedIn": "Unable to save the vote, you are not logged in yet. Please try again in a moment.",
-        "yourVote": "from you"
+        "notLoggedIn": "Unable to save the vote, you are not logged in yet. Please try again in a moment."
     },
     "searchPlaceholder": "Search",
     "searchNoMatchAtAll": "No talk matched your criteria.",
@@ -43,10 +40,10 @@
     "speakers": "speakers",
     "talks": {
         "menuNoDate": "Without date",
-        "list": "Go to talks list",
-        "vote": "Vote for the talk ",
         "date": "Display talks for the ",
-        "commented": "You commented"
+        "commented": "You commented",
+        "back": "All talks",
+        "dates": "Talk days"
     },
     "footer": {
         "madeBy": "Powered by"
@@ -59,15 +56,11 @@
         "errorLogin": "Unable to identify you as guest"
     },
     "qrCode": {
-        "switchToLightMode": "Switch to Light Mode",
-        "switchToDarkMode": "Switch to Dark Mode",
         "downloadPng": "Download PNG",
         "downloadSvg": "Download SVG",
         "close": "Close",
-        "colorSelection": "QR Code Color",
         "colorBlack": "Black",
         "colorWhite": "White",
-        "colorEvent": "Event Color",
-        "colorCustom": "Custom Color"
+        "colorEvent": "Event Color"
     }
 }

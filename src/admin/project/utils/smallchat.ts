@@ -31,12 +31,6 @@ export const hideSmallChat = () => {
     )
 }
 
-export const showSmallChat = () => {
-    getSmallChatTopButton().forEach(
-        (node) => (node.style.visibility = 'visible')
-    )
-}
-
 export const openSmallChat = () => {
     getSmallChatTopButton().forEach(
         (node) => (node.style.visibility = 'visible')

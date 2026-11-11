@@ -3,8 +3,6 @@ import type firebase from 'firebase/compat/app'
 
 type Query = firebase.firestore.Query
 type QuerySnapshot<T> = firebase.firestore.QuerySnapshot<T>
-type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>
-type DocumentReference<T> = firebase.firestore.DocumentReference<T>
 type DocumentData = firebase.firestore.DocumentData
 
 export type UseQueryResult<T = unknown> = {
@@ -61,61 +59,6 @@ export const useFirestoreCollection = <T>(
     useEffect(() => {
         return load()
     }, [load])
-
-    return {
-        isLoading,
-        load,
-        error,
-        isError,
-        data: data || null,
-        loaded: data !== undefined,
-    }
-}
-
-export const useFirestoreDocument = <T>(
-    ref: DocumentReference<T extends DocumentData ? T : DocumentData>
-): UseQueryResult<T> => {
-    const [isLoading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const [data, setData] = useState<T>()
-
-    const isError = error !== ''
-
-    const docTransformer = (querySnapshot: DocumentSnapshot<DocumentData>) => {
-        const d = querySnapshot.data()
-
-        if (d === undefined) {
-            return
-        }
-
-        setData({
-            id: querySnapshot.id,
-            ...(d as T),
-        })
-    }
-
-    const load = useCallback(() => {
-        setLoading(true)
-
-        try {
-            ref.get()
-                .then((docSnapshot) => {
-                    docTransformer(docSnapshot)
-                })
-                .catch((error) => {
-                    setError(error.message)
-                })
-                .finally(() => {
-                    setLoading(false)
-                })
-        } catch (error: unknown) {
-            setError(error instanceof Error ? error.message : `${error}`)
-        }
-    }, [ref.path])
-
-    useEffect(() => {
-        return load()
-    }, [ref.path])
 
     return {
         isLoading,
