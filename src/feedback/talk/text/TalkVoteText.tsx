@@ -1,12 +1,20 @@
-import { type ChangeEvent, useEffect, useState } from 'react'
-import { emphasize, styled, type Theme } from '@mui/material'
+import {
+    type ChangeEvent,
+    type KeyboardEvent,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
+import type { Theme } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import SaveIcon from '@mui/icons-material/Save'
+import SendIcon from '@mui/icons-material/Send'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InfoIcon from '@mui/icons-material/Info'
-import Paper from '@mui/material/Paper'
+import LockIcon from '@mui/icons-material/Lock'
+import SpellcheckIcon from '@mui/icons-material/Spellcheck'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
 import { TalkVoteTextResult } from './TalkVoteTextResult.tsx'
 import { Trans, useTranslation } from 'react-i18next'
 import { VOTE_STATUS_HIDDEN, VOTE_TYPE_TEXT_PLUS } from '../../../core/contants'
@@ -16,30 +24,47 @@ import { makeStyles } from '@mui/styles'
 import type { Vote, VoteItem, VoteStatus } from '../../../core/models'
 import type { OnVoteChange } from '../TalkVote.tsx'
 import type { TextVoteResult } from '../core/getVoteResultSelectorSelector'
+import { insertStarter } from './insertStarter'
+import { useWritingHints } from './useWritingHints'
+
+const MAX_COMMENT_LENGTH = 1000
+const STARTER_KEYS = ['liked', 'question', 'idea', 'unclear'] as const
 
 const useStyles = makeStyles((theme: Theme) => ({
     itemContainer: {
         margin: -1,
     },
-    item: {
-        overflow: 'hidden',
-        padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
-        textAlign: 'center',
-        fontSize: '17px',
-        borderRadius: '0',
-        color: theme.palette.text.secondary,
-        boxShadow: 'inset 0 0 0 1px ' + theme.palette.paperBorder,
-        boxSizing: 'border-box',
-        '&:hover': {
-            backgroundColor: emphasize(theme.palette.background.paper, 0.07),
-        },
+    starters: {
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        transition: 'all 200ms ease-out',
+        flexWrap: 'wrap',
+        gap: theme.spacing(1),
+        margin: `${theme.spacing(1)} 0 ${theme.spacing(1.5)}`,
     },
-    textArea: {},
+    meta: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: theme.spacing(2),
+        marginTop: theme.spacing(0.75),
+    },
+    metaIcon: {
+        fontSize: 14,
+        verticalAlign: 'text-bottom',
+        marginRight: 4,
+    },
+    hints: {
+        marginTop: theme.spacing(1.5),
+        padding: theme.spacing(1.5),
+        borderRadius: 6,
+        boxShadow: 'inset 0 0 0 1px ' + theme.palette.paperBorder,
+    },
+    hint: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: theme.spacing(1),
+        marginTop: theme.spacing(1),
+    },
     leftIcon: {
         marginRight: theme.spacing(1),
         fontSize: 20,
@@ -65,15 +90,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         verticalAlign: 'text-bottom',
     },
 }))
-
-const VoteTextField = styled(TextField)({
-    width: '100%',
-    height: '100%',
-    border: 'none',
-    '& .MuiInput-underline:after, & .MuiInput-underline:before': {
-        borderBottom: 'none !important',
-    },
-})
 
 interface TalkVoteTextProps {
     /** The user votes on this vote item. */
@@ -101,11 +117,14 @@ export const TalkVoteText = ({
 }: TalkVoteTextProps) => {
     const { t } = useTranslation()
     const classes = useStyles()
+    const inputRef = useRef<HTMLTextAreaElement>(null)
+    const [isWriting, setWriting] = useState(false)
     const [data, setData] = useState<TextVoteFormState>({
         comment: '',
         status: null,
         dataLoaded: false,
     })
+    const { hints, applyHint } = useWritingHints(data.comment, isWriting)
 
     useEffect(() => {
         if (currentUserVotes && (!data.dataLoaded || !data.vote)) {
@@ -124,13 +143,17 @@ export const TalkVoteText = ({
         }
     }, [currentUserVotes, data.vote, data.dataLoaded])
 
+    const setComment = (comment: string) =>
+        setData((previous) => ({ ...previous, comment }))
+
     const onTextChange = (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setData({
-            ...data,
-            comment: event.target.value,
-        })
+    ) => setComment(event.target.value)
+
+    const onStarterClick = (starter: string) => {
+        setComment(insertStarter(data.comment, starter))
+        setWriting(true)
+        inputRef.current?.focus()
     }
 
     const onVoteDelete = () => {
@@ -145,8 +168,22 @@ export const TalkVoteText = ({
         }
     }
 
-    const saveUpdateKey =
-        currentUserVotes && data.dataLoaded ? 'comment.update' : 'comment.save'
+    const canSend = data.comment.trim().length > 0
+    const onSend = () => {
+        if (canSend) {
+            onVoteChange(voteItem, data.comment)
+        }
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+            event.preventDefault()
+            onSend()
+        }
+    }
+
+    const sendKey =
+        currentUserVotes && data.dataLoaded ? 'comment.update' : 'comment.send'
 
     return (
         <Grid
@@ -158,16 +195,91 @@ export const TalkVoteText = ({
             <Typography variant="h6" color="textPrimary" component="h3">
                 {voteItem.name}
             </Typography>
-            <Paper elevation={1} className={classes.item}>
-                <VoteTextField
-                    multiline
-                    fullWidth
-                    variant="standard"
-                    placeholder={t('comment.placeholder')}
-                    onChange={onTextChange}
-                    value={data.comment}
-                />
-            </Paper>
+
+            <div className={classes.starters}>
+                {STARTER_KEYS.map((key) => (
+                    <Chip
+                        key={key}
+                        label={t(`comment.starters.${key}`)}
+                        variant="outlined"
+                        clickable
+                        onClick={() =>
+                            onStarterClick(t(`comment.starters.${key}`))
+                        }
+                    />
+                ))}
+            </div>
+
+            <TextField
+                multiline
+                fullWidth
+                minRows={3}
+                maxRows={10}
+                variant="outlined"
+                placeholder={t('comment.placeholder')}
+                onChange={onTextChange}
+                onFocus={() => setWriting(true)}
+                onKeyDown={onKeyDown}
+                value={data.comment}
+                inputRef={inputRef}
+                inputProps={{
+                    maxLength: MAX_COMMENT_LENGTH,
+                    spellCheck: true,
+                    lang: 'en',
+                    'aria-label': voteItem.name || t('comment.placeholder'),
+                }}
+            />
+            <div className={classes.meta}>
+                <Typography variant="caption" color="textSecondary">
+                    <LockIcon className={classes.metaIcon} />
+                    <Trans i18nKey="comment.anonymousHint" />
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                    {data.comment.length}/{MAX_COMMENT_LENGTH}
+                </Typography>
+            </div>
+
+            {hints.length > 0 && (
+                <div className={classes.hints} aria-live="polite">
+                    <Typography variant="subtitle2" color="textPrimary">
+                        <SpellcheckIcon className={classes.metaIcon} />
+                        <Trans i18nKey="comment.writingHelp" />
+                    </Typography>
+                    {hints.map((hint, hintIndex) => (
+                        <div key={hintIndex} className={classes.hint}>
+                            <Typography variant="body2" color="textSecondary">
+                                {hint.message}
+                            </Typography>
+                            {hint.suggestions.map(
+                                (suggestion, suggestionIndex) => {
+                                    const replacement =
+                                        suggestion.get_replacement_text()
+                                    return (
+                                        <Chip
+                                            key={suggestionIndex}
+                                            size="small"
+                                            color="primary"
+                                            label={
+                                                replacement ||
+                                                t('comment.remove', {
+                                                    text: hint.problem,
+                                                })
+                                            }
+                                            onClick={() =>
+                                                applyHint(
+                                                    hint,
+                                                    suggestion
+                                                ).then(setComment)
+                                            }
+                                        />
+                                    )
+                                }
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {data.status && data.status === VOTE_STATUS_HIDDEN && (
                 <div className={classes.voteHidden}>
                     <InfoIcon className={classes.voteHiddenIcon} />
@@ -175,24 +287,25 @@ export const TalkVoteText = ({
                 </div>
             )}
 
-            {data.comment && (
-                <div className={classes.buttonContainer}>
+            <div className={classes.buttonContainer}>
+                {data.vote && (
                     <Button onClick={onVoteDelete}>
                         <DeleteIcon className={classes.leftIcon} />
                         <Trans i18nKey="comment.delete">Delete comment</Trans>
                     </Button>
+                )}
 
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.saveButton}
-                        onClick={() => onVoteChange(voteItem, data.comment)}
-                    >
-                        <SaveIcon className={classes.leftIcon} />
-                        <Trans i18nKey={saveUpdateKey} />
-                    </Button>
-                </div>
-            )}
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.saveButton}
+                    disabled={!canSend}
+                    onClick={onSend}
+                >
+                    <SendIcon className={classes.leftIcon} />
+                    <Trans i18nKey={sendKey} />
+                </Button>
+            </div>
 
             {voteResult && (
                 <TalkVoteTextResult

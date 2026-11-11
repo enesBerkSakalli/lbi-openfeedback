@@ -5,11 +5,21 @@
         "becomeSponsor": "Become a sponsor"
     },
     "comment": {
-        "placeholder": "Your answer",
+        "placeholder": "What did you think? Questions, ideas or anything you noticed…",
         "delete": "Delete",
         "update": "Update",
         "save": "Save",
-        "hidden": "Your vote has been hidden by the event organizer. Contact them for more information"
+        "hidden": "Your vote has been hidden by the event organizer. Contact them for more information",
+        "send": "Send anonymously",
+        "anonymousHint": "Anonymous: no login needed. Others can see your comment.",
+        "writingHelp": "Writing suggestions",
+        "remove": "Remove “{{text}}”",
+        "starters": {
+            "liked": "I liked…",
+            "question": "A question:",
+            "idea": "An idea:",
+            "unclear": "Could be clearer:"
+        }
     },
     "vote": {
         "adminNotAnonymous": "You are logged in to the admin, your vote will not be anonymous.",

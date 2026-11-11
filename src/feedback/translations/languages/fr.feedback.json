@@ -5,11 +5,21 @@
         "becomeSponsor": "Devenir sponsor"
     },
     "comment": {
-        "placeholder": "Votre réponse",
+        "placeholder": "Qu'en avez-vous pensé ? Questions, idées ou remarques…",
         "delete": "Supprimer",
         "update": "Mettre à jour",
         "save": "Sauvegarder",
-        "hidden": "Votre vote a été caché par les organisateurs de l'évènement. Contactez les si vous voulez plus d'informations."
+        "hidden": "Votre vote a été caché par les organisateurs de l'évènement. Contactez les si vous voulez plus d'informations.",
+        "send": "Envoyer anonymement",
+        "anonymousHint": "Anonyme : aucune connexion requise. Les autres peuvent voir votre commentaire.",
+        "writingHelp": "Suggestions d'écriture",
+        "remove": "Supprimer « {{text}} »",
+        "starters": {
+            "liked": "J'ai aimé…",
+            "question": "Une question :",
+            "idea": "Une idée :",
+            "unclear": "Pourrait être plus clair :"
+        }
     },
     "vote": {
         "adminNotAnonymous": "Vous êtes connecté à l'admin, le vote ne sera pas anonyme.",
