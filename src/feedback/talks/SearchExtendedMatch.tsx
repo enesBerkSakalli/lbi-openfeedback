@@ -19,10 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 16,
         borderRadius: 4,
         marginTop: 32,
-        backgroundColor:
-            theme.palette.mode === 'dark'
-                ? theme.palette.background.paper
-                : grey[100],
+        backgroundColor: grey[100],
     },
     talks: {
         transform: 'scale(0.9)',

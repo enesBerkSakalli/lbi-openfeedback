@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: -1,
     },
     card: {
-        borderRadius: 12,
-        backgroundColor: theme.palette.background.default,
+        borderRadius: 0,
+        backgroundColor: theme.palette.surface,
         border: `2px solid ${theme.palette.ink}`,
         boxShadow: `4px 4px 0 ${theme.palette.ink}`,
         height: 150,

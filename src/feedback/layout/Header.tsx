@@ -22,14 +22,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 200,
     },
     // In the flow, not on top of the logo: the logo centers in what is left.
+    // A ruled cell, as in a neo-brutalist navigation bar
     iconLeft: {
         flexShrink: 0,
-        paddingLeft: theme.spacing(1),
+        alignSelf: 'stretch',
+        display: 'flex',
+        '&:not(:empty)': {
+            borderRight: `2px solid ${theme.palette.ink}`,
+        },
     },
     backButton: {
-        minHeight: 48,
-        paddingLeft: theme.spacing(1.5),
-        paddingRight: theme.spacing(2),
+        height: '100%',
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2.5),
     },
     iconRight: {
         minWidth: 28,
@@ -76,10 +81,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: (props: HeaderStyleProps) =>
             props.inIFrame ? 'relative' : 'sticky',
         zIndex: 3,
-        boxShadow: (props: HeaderStyleProps) =>
-            props.inIFrame
-                ? 'none'
-                : `0px 1px 15px ${theme.palette.headerShadow}`,
+        borderBottom: `2px solid ${theme.palette.ink}`,
         marginBottom: 20,
     },
     // Below lg the event name is not shown, but stays the page's h1 for

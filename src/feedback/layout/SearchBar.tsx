@@ -6,14 +6,11 @@ import { type Theme, useTheme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputBase from '@mui/material/InputBase'
-import { grey } from '@mui/material/colors'
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        backgroundColor:
-            theme.palette.mode === 'dark'
-                ? theme.palette.background.paper
-                : grey[100],
+        backgroundColor: theme.palette.surface,
+        borderTop: `2px solid ${theme.palette.ink}`,
     },
     wrapper: {
         width: '100%',

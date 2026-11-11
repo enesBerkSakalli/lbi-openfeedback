@@ -35,9 +35,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         gap: theme.spacing(1),
         margin: `${theme.spacing(1)} 0 ${theme.spacing(1.5)}`,
     },
+    // The lime highlighter tag from the neo-brutalist reference
+    highlight: {
+        display: 'inline-block',
+        padding: theme.spacing(0.25, 1),
+        backgroundColor: theme.palette.lime,
+        color: '#1a1a1a',
+        border: `2px solid ${theme.palette.ink}`,
+        boxShadow: `3px 3px 0 ${theme.palette.ink}`,
+        transform: 'rotate(-1.5deg)',
+    },
     starterChip: {
         height: TOUCH_TARGET,
-        borderRadius: TOUCH_TARGET / 2,
         fontSize: 15,
     },
     meta: {
@@ -76,7 +85,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     fixChip: {
         height: 40,
-        borderRadius: 20,
     },
     undoRow: {
         display: 'flex',
@@ -191,7 +199,7 @@ export const TalkVoteText = ({
             data-testid="VoteItem"
         >
             <Typography variant="h6" color="textPrimary" component="h3">
-                {voteItem.name}
+                <span className={classes.highlight}>{voteItem.name}</span>
             </Typography>
 
             <div className={classes.starters}>

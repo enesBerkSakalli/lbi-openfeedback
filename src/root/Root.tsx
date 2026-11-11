@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 import { ThemeProvider } from '@mui/material/styles'
-import { CssBaseline, useMediaQuery } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { setFavicon } from '../utils/dom'
 import { i18n } from './translations/i18n'
-import { feedbackThemes } from '../feedback/feedbackTheme'
+import { feedbackTheme } from '../feedback/feedbackTheme'
 
 // The starting page: what this site is and where to go, nothing to sell.
 const StartPage = () => {
@@ -52,8 +52,6 @@ const StartPage = () => {
 }
 
 export const Root = () => {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-
     useEffect(() => {
         setFavicon('/favicon-root.ico')
         document.title = i18n.t('start.title')
@@ -61,9 +59,7 @@ export const Root = () => {
 
     return (
         <I18nextProvider i18n={i18n}>
-            <ThemeProvider
-                theme={feedbackThemes[prefersDarkMode ? 'dark' : 'light']}
-            >
+            <ThemeProvider theme={feedbackTheme}>
                 <CssBaseline />
                 <StartPage />
             </ThemeProvider>

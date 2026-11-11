@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles'
-import { type Theme, useTheme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { VoteTextResultItem } from './VoteTextResultItem.tsx'
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     person: {
         marginTop: theme.spacing(3),
         padding: theme.spacing(0.5, 2),
-        borderRadius: 12,
         border: `2px solid ${theme.palette.ink}`,
         boxShadow: `4px 4px 0 ${theme.palette.ink}`,
         color: theme.palette.text.primary,
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'inline-block',
         marginTop: theme.spacing(1.5),
         padding: theme.spacing(0.25, 1.25),
-        borderRadius: 999,
         border: `2px solid ${theme.palette.ink}`,
         color: '#1a1a1a',
         fontWeight: 700,
@@ -51,7 +49,6 @@ export const TalkVoteTextResult = ({
     onDelete,
 }: TalkVoteTextResultProps) => {
     const classes = useStyles()
-    const isDark = useTheme().palette.mode === 'dark'
     const user = useAppSelector(getUserSelector)
     const dispatch = useAppDispatch()
     const { t } = useTranslation()
@@ -60,7 +57,7 @@ export const TalkVoteTextResult = ({
         <ul className="comments">
             {groupByPerson(result).map((person) => {
                 const isMe = !!user && person.userId === user.uid
-                const colors = personColors(person.personNumber, isDark)
+                const colors = personColors(person.personNumber)
                 return (
                     <Box
                         component="li"

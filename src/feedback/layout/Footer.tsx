@@ -4,8 +4,6 @@ import { Box, useTheme } from '@mui/material'
 export const Footer = () => {
     const { t } = useTranslation()
     const theme = useTheme()
-    const isDarkMode = theme.palette.mode === 'dark'
-    const logoColor = isDarkMode ? 'white' : 'black'
 
     return (
         <Box
@@ -30,7 +28,7 @@ export const Footer = () => {
                 >
                     <img
                         height="25"
-                        src={`/static/logos/openfeedback-${logoColor}-orange.svg`}
+                        src="/static/logos/openfeedback-black-orange.svg"
                         alt="open feedback"
                     />
                 </a>

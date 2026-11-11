@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 40,
         minWidth: 64,
         gap: theme.spacing(0.75),
-        borderRadius: 20,
         paddingLeft: theme.spacing(1.5),
         paddingRight: theme.spacing(1.5),
         fontVariantNumeric: 'tabular-nums',

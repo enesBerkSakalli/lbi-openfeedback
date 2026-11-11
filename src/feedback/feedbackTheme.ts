@@ -2,12 +2,18 @@ import { createTheme } from '@mui/material/styles'
 import { grey } from '@mui/material/colors'
 import { COLORS } from '../constants/colors'
 
-const createFeedbackTheme = (prefersDarkMode: boolean) => {
+const createFeedbackTheme = () => {
     // Neobrutalist accents: solid ink borders and hard offset shadows, kept
     // to the controls and cards people act on.
-    const ink = prefersDarkMode ? 'rgba(255, 255, 255, 0.85)' : '#1a1a1a'
+    const ink = '#1a1a1a'
     const hardShadow = (size: number) => `${size}px ${size}px 0 ${ink}`
+    // Cream page, white panels, lavender and lime accents with black text
+    const page = '#f6f1e7'
+    const surface = '#fffdf8'
+    const lavender = '#c4b2ff'
+    const lime = '#d4f27a'
     return createTheme({
+        shape: { borderRadius: 0 },
         // One fixed role scale, Roboto 400/500/700 only:
         // title 24/700, section 18/700, reading 17, label 15/700,
         // meta 14, counter 13.
@@ -40,47 +46,41 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
             },
         },
         palette: {
-            // The brand red-orange in WCAG AA shades: a light tint on the
-            // dark background (5.7:1, dark text on it 7.8:1), its dark
-            // shade on the light one (4.95:1, white text on it 5.2:1).
-            primary: prefersDarkMode
-                ? {
-                      main: '#ff896f',
-                      contrastText: 'rgba(0, 0, 0, 0.87)',
-                  }
-                : {
-                      main: COLORS.DARK_RED_ORANGE,
-                      contrastText: '#fff',
-                  },
+            // The brand red-orange in its WCAG AA dark shade (4.6:1 on
+            // cream, white text on it 5.2:1).
+            primary: {
+                main: COLORS.DARK_RED_ORANGE,
+                contrastText: '#fff',
+            },
             action: {
                 // Greyed-out controls stay legible (WCAG exempts them).
-                disabled: prefersDarkMode
-                    ? 'rgba(255, 255, 255, 0.5)'
-                    : 'rgba(0, 0, 0, 0.45)',
+                disabled: 'rgba(0, 0, 0, 0.45)',
             },
             secondary: {
                 main: '#3673ff',
                 contrastText: 'rgba(255,255,255, 0.87)',
             },
             background: {
-                default: prefersDarkMode ? '#303030' : '#fafafa',
-                paper: prefersDarkMode ? '#595959' : '#EDEDED',
+                default: page,
+                paper: '#EDEDED',
             },
             text: {
-                primary: prefersDarkMode ? grey[50] : grey[900],
-                secondary: prefersDarkMode
-                    ? 'rgba(255, 255, 255, 0.7)'
-                    : grey[600],
+                primary: grey[900],
+                // Darker than grey[600]: it must hold 4.5:1 on cream
+                secondary: '#5c5c5c',
             },
-            mode: prefersDarkMode ? 'dark' : 'light',
-            pageBackground: prefersDarkMode ? '#303030' : '#fff',
-            headerShadow: prefersDarkMode ? '#000' : '#B3B3B3',
-            paperBorder: prefersDarkMode ? grey[600] : grey[300],
-            paperVoteBorder: prefersDarkMode ? grey[400] : grey[300],
-            textVoteTitle: prefersDarkMode ? grey[400] : grey[900],
-            textVoteTitleShadow: prefersDarkMode ? grey[800] : grey[50],
-            textDimmed: prefersDarkMode ? grey[400] : grey[600],
+            mode: 'light',
+            pageBackground: page,
+            headerShadow: '#B3B3B3',
+            paperBorder: grey[300],
+            paperVoteBorder: grey[300],
+            textVoteTitle: grey[900],
+            textVoteTitleShadow: grey[50],
+            textDimmed: '#5c5c5c',
             ink,
+            surface,
+            lavender,
+            lime,
         },
         components: {
             // A visible keyboard focus ring on every MUI control (the
@@ -89,11 +89,7 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                 styleOverrides: {
                     root: {
                         '&.Mui-focusVisible': {
-                            outline: `2px solid ${
-                                prefersDarkMode
-                                    ? '#ff896f'
-                                    : COLORS.DARK_RED_ORANGE
-                            }`,
+                            outline: `2px solid ${COLORS.DARK_RED_ORANGE}`,
                             outlineOffset: 2,
                         },
                     },
@@ -105,10 +101,13 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                         props: { variant: 'contained' },
                         style: {
                             border: `2px solid ${ink}`,
+                            backgroundColor: lavender,
+                            color: '#1a1a1a',
                             boxShadow: hardShadow(3),
                             transition:
                                 'transform 120ms ease-out, box-shadow 120ms ease-out',
                             '&:hover': {
+                                backgroundColor: lavender,
                                 boxShadow: hardShadow(4),
                                 transform: 'translate(-1px, -1px)',
                             },
@@ -126,8 +125,12 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                         props: { variant: 'outlined' },
                         style: {
                             border: `2px solid ${ink}`,
+                            backgroundColor: surface,
                             boxShadow: hardShadow(3),
-                            '&:hover': { border: `2px solid ${ink}` },
+                            '&:hover': {
+                                border: `2px solid ${ink}`,
+                                backgroundColor: surface,
+                            },
                         },
                     },
                 ],
@@ -141,8 +144,7 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
             MuiOutlinedInput: {
                 styleOverrides: {
                     root: {
-                        borderRadius: 8,
-                        backgroundColor: prefersDarkMode ? '#262626' : '#fff',
+                        backgroundColor: surface,
                         '&:hover .MuiOutlinedInput-notchedOutline': {
                             borderColor: ink,
                         },
@@ -154,15 +156,23 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                 },
             },
             MuiChip: {
-                // Same 3:1 floor for the grey outlined chips' border.
+                styleOverrides: { root: { borderRadius: 0 } },
                 variants: [
                     {
                         props: { variant: 'outlined', color: 'default' },
                         style: {
                             border: `2px solid ${ink}`,
+                            backgroundColor: surface,
+                            '&.MuiChip-clickable:hover': {
+                                backgroundColor: lime,
+                                color: '#1a1a1a',
+                            },
                         },
                     },
                 ],
+            },
+            MuiAlert: {
+                styleOverrides: { root: { border: `2px solid ${ink}` } },
             },
             MuiToggleButton: {
                 styleOverrides: {
@@ -172,7 +182,7 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                         color: 'inherit',
                         '&.Mui-selected, &.Mui-selected:hover': {
                             backgroundColor: ink,
-                            color: prefersDarkMode ? '#1a1a1a' : '#fff',
+                            color: '#fff',
                         },
                     },
                 },
@@ -187,9 +197,7 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
                     input: {
                         '&::placeholder': {
                             opacity: 1,
-                            color: prefersDarkMode
-                                ? 'rgba(255, 255, 255, 0.6)'
-                                : 'rgba(0, 0, 0, 0.6)',
+                            color: 'rgba(0, 0, 0, 0.6)',
                         },
                     },
                 },
@@ -198,8 +206,5 @@ const createFeedbackTheme = (prefersDarkMode: boolean) => {
     })
 }
 
-/** Themes of the feedback app, also used by the admin to preview votes. */
-export const feedbackThemes = {
-    light: createFeedbackTheme(false),
-    dark: createFeedbackTheme(true),
-}
+/** The feedback app theme (light only), also used by the admin to preview votes. */
+export const feedbackTheme = createFeedbackTheme()

@@ -13,19 +13,16 @@ export interface PersonColors {
     rule: string
 }
 
-export const personColors = (
-    personNumber: number,
-    isDark: boolean
-): PersonColors => {
+export const personColors = (personNumber: number): PersonColors => {
     // After the six reference hues, the golden angle spreads the next ones
     const hue =
         personNumber <= HUES.length
             ? HUES[personNumber - 1]
             : Math.round((personNumber * 137.508) % 360)
     return {
-        tint: isDark ? `hsl(${hue} 28% 22%)` : `hsl(${hue} 85% 93%)`,
+        tint: `hsl(${hue} 85% 93%)`,
         strong: `hsl(${hue} 72% 72%)`,
-        muted: isDark ? 'rgba(255, 255, 255, 0.78)' : 'rgba(0, 0, 0, 0.7)',
-        rule: isDark ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.2)',
+        muted: 'rgba(0, 0, 0, 0.7)',
+        rule: 'rgba(0, 0, 0, 0.2)',
     }
 }
