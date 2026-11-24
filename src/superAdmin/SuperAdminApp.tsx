@@ -36,7 +36,7 @@ export function SuperAdminApp() {
     return (
         <HelmetProvider>
             <Helmet>
-                <title>🦸🏿 ADMIN- Open Feedback</title>
+                <title>🦸🏿 ADMIN - FeedbackY</title>
             </Helmet>
             <div
                 style={{

@@ -91,7 +91,7 @@ export const SetupForm = () => {
             </Box>
             <Box display="flex" flexWrap="wrap" marginBottom={2}>
                 <SetupTypeBox
-                    title="OpenFeedback Database"
+                    title="FeedbackY Database"
                     isSelected={project.setupType === PROJECT_TYPE_OPENFEEDBACK}
                 />
                 <SetupTypeBox

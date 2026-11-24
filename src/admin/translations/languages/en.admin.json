@@ -109,11 +109,11 @@
             "projectTypeHoverboard": "Hoverboard v2 Firestore",
             "projectTypeHoverboardDetail": "The talks/speakers/schedule will be retrieved directly on page load from your own Firestore database that follow Hoverboard v2 model.",
             "projectTypeJsonurl": "JSON API URL",
-            "projectTypeJsonurlDetail": "Provide an url to a .json that you’ll either host (on gist.github.com or another static server) or a dynamic answer from your own database/api. The json model will need to match OpenFeedback one, you’ll be able to check it on the next screen.",
+            "projectTypeJsonurlDetail": "Provide an url to a .json that you’ll either host (on gist.github.com or another static server) or a dynamic answer from your own database/api. The json model will need to match FeedbackY one, you’ll be able to check it on the next screen.",
             "projectTypeJsonimport": "Import a JSON file",
-            "projectTypeJsonimportDetail": "Upload or paste a .json file matching the OpenFeedback model. The talks and speakers are imported once into OpenFeedback, so you can edit them afterwards like a regular event.",
-            "projectTypeOpenfeedback": "OpenFeedback Database (default)",
-            "projectTypeOpenfeedbackDetail": "You can manually enter the talks/speakers/schedule on OpenFeedback. It will not be in sync with another service if you are using one. No additional configuration is required.",
+            "projectTypeJsonimportDetail": "Upload or paste a .json file matching the FeedbackY model. The talks and speakers are imported once into FeedbackY, so you can edit them afterwards like a regular event.",
+            "projectTypeOpenfeedback": "FeedbackY Database (default)",
+            "projectTypeOpenfeedbackDetail": "You can manually enter the talks/speakers/schedule on FeedbackY. It will not be in sync with another service if you are using one. No additional configuration is required.",
             "projectTypeRequired": "You need to choose how you want to setup the event.",
             "stepTitle": "Create a new event (step 2/3)",
             "stepTitleDone": "Create a new event (step 2/2)",
@@ -137,7 +137,7 @@
         "userNotVerified": "User not verified",
         "loading": "Loading your events and organizations...",
         "organization": {
-            "noOrganizationName": "Your OpenFeedback events"
+            "noOrganizationName": "Your FeedbackY events"
         },
         "selectEvent": "Select the event "
     },
@@ -197,8 +197,8 @@
     },
     "settingsIntegration": {
         "title": "API integration",
-        "description": "Use an API key to access this event's data through the OpenFeedback API.",
-        "descriptionOrganization": "Use an API key to access this organization's data through the OpenFeedback API.",
+        "description": "Use an API key to access this event's data through the FeedbackY API.",
+        "descriptionOrganization": "Use an API key to access this organization's data through the FeedbackY API.",
         "documentationLink": "Read the API documentation",
         "apiKey": "API key",
         "noKey": "No API key has been generated for this event yet.",
@@ -349,7 +349,7 @@
     "speakers": {
         "addButton": "Add speaker",
         "addTitle": "Add a new speaker to the event",
-        "cannotChange": "Speakers cannot be changed from OpenFeedback itself for this project. Refer to your external services configuration to do so.",
+        "cannotChange": "Speakers cannot be changed from FeedbackY itself for this project. Refer to your external services configuration to do so.",
         "name": "Name*",
         "nameRequired": "The speaker name is required.",
         "photoUrl": "Photo",
@@ -364,7 +364,7 @@
     },
     "talks": {
         "addTalks": "Add talks",
-        "cannotChange": "Talks cannot be changed from OpenFeedback itself for this project. Refer to your external services configuration to do so.",
+        "cannotChange": "Talks cannot be changed from FeedbackY itself for this project. Refer to your external services configuration to do so.",
         "fieldEndTime": "End time",
         "fieldSpeakers": "Speaker(s)",
         "fieldStartTime": "Start time",
@@ -389,7 +389,7 @@
         "hide": "hide",
         "hidden": "Hidden votes",
         "hideDialogTitle": "Hide vote",
-        "hideDialogDescription": "Hiding the vote will prevent everyone except the OpenFeedback member to see the vote. The user will still be able to update it but it will not be visible again until you decide to.",
+        "hideDialogDescription": "Hiding the vote will prevent everyone except the FeedbackY member to see the vote. The user will still be able to update it but it will not be visible again until you decide to.",
         "unhideDialogTitle": "Unhidding a vote",
         "unhideDialogDescription": "Unhiding the vote so it will be visible publicly.",
         "unhideDialogConfirm": "Unhide the vote",

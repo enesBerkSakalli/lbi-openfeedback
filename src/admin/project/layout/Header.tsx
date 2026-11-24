@@ -309,7 +309,7 @@ export const Header = ({ refTarget, toggleDrawer }: HeaderProps) => {
                     title={selectedProject.name}
                     value={`${window.location.origin}/${selectedProjectId}`}
                     fileName={
-                        selectedProject.name.trim() + '-qr-code-openfeedback'
+                        selectedProject.name.trim() + '-qr-code-feedbacky'
                     }
                     logo={selectedProject.logoSmall}
                     eventColor={

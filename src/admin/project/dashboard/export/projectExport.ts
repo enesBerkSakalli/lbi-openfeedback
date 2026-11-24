@@ -218,5 +218,5 @@ export const toExportFileName = (
         .trim()
         .replace(/[\\/:*?"<>|\s]+/g, '-')
         .replace(/^-+|-+$/g, '')
-    return `${base || 'event'}-openfeedback-${suffix}.${extension}`
+    return `${base || 'event'}-feedbacky-${suffix}.${extension}`
 }

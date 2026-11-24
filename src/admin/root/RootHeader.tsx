@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/logo-openfeedback-white.png'
+import { Wordmark } from '../../baseComponents/BrandHeader.tsx'
 import { HEX_COLORS } from '../../constants/colors'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
@@ -69,11 +69,7 @@ export const RootHeader = () => {
             <Grid container>
                 <Grid item xs={12} sm={6} className={classes.left}>
                     <Box component="a" href="/">
-                        <img
-                            className={classes.logo}
-                            src={logo}
-                            alt="open feedback logo"
-                        />
+                        <Wordmark />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.right}>

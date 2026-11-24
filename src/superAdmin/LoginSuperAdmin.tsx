@@ -1,5 +1,5 @@
 import { memo, type ReactNode, useEffect, useState } from 'react'
-import logoWhite from '../assets/logo-openfeedback-white.png'
+import { Wordmark } from '../baseComponents/BrandHeader.tsx'
 import { authProvider } from '../firebase'
 import { LoaderMatchParent } from '../baseComponents/customComponent/LoaderMatchParent.tsx'
 import Box from '@mui/material/Box'
@@ -79,12 +79,9 @@ export const LoginSuperAdmin = memo(({ children }: { children: ReactNode }) => {
                 flexGrow="1"
                 textAlign="center"
             >
-                <img
-                    height="40"
-                    src={logoWhite}
-                    alt="open feedback"
-                    style={{ marginBottom: '40px' }}
-                />
+                <Box marginBottom="40px">
+                    <Wordmark size={32} />
+                </Box>
                 {loaderDisplayed && (
                     <LoaderMatchParent style={{ color: 'white' }} height={40} />
                 )}

@@ -214,19 +214,19 @@ describe('buildProjectExport hidden talks', () => {
 describe('toExportFileName', () => {
     it('replaces spaces and forbidden characters', () => {
         expect(toExportFileName(' DevFest: Nantes/2026 ', 'votes', 'csv')).toBe(
-            'DevFest-Nantes-2026-openfeedback-votes.csv'
+            'DevFest-Nantes-2026-feedbacky-votes.csv'
         )
     })
 
     it('keeps accented letters', () => {
         expect(toExportFileName('Café Conf', 'data', 'json')).toBe(
-            'Café-Conf-openfeedback-data.json'
+            'Café-Conf-feedbacky-data.json'
         )
     })
 
     it('falls back when nothing is left of the name', () => {
         expect(toExportFileName(' / ', 'data', 'json')).toBe(
-            'event-openfeedback-data.json'
+            'event-feedbacky-data.json'
         )
     })
 })

@@ -109,11 +109,11 @@
             "projectTypeHoverboard": "Hoverboard v2 Firestore",
             "projectTypeHoverboardDetail": "Les présentations / orateurs / calendrier seront récupérés directement au chargement de la page à partir de votre propre base de données Firestore en suivant le modèle de Hoverboard v2.",
             "projectTypeJsonurl": "JSON API URL",
-            "projectTypeJsonurlDetail": "Vous fournissez une URL vers un .json que vous hébergerez (sur gist.github.com ou un autre serveur statique) ou une API pour votre propre base de donnée. Le modèle du .json devra correspondre à celui d'OpenFeedback, vous pourrez le vérifier sur l'écran suivant. ",
+            "projectTypeJsonurlDetail": "Vous fournissez une URL vers un .json que vous hébergerez (sur gist.github.com ou un autre serveur statique) ou une API pour votre propre base de donnée. Le modèle du .json devra correspondre à celui d'FeedbackY, vous pourrez le vérifier sur l'écran suivant. ",
             "projectTypeJsonimport": "Importer un fichier JSON",
-            "projectTypeJsonimportDetail": "Téléversez ou collez un fichier .json correspondant au modèle OpenFeedback. Les présentations et orateurs sont importés une fois dans OpenFeedback, vous pourrez ensuite les modifier comme un évènement classique.",
-            "projectTypeOpenfeedback": "Base de donnée OpenFeedback (par défaut)",
-            "projectTypeOpenfeedbackDetail": "Vous pouvez saisir manuellement les présentations / orateurs / calendrier sur OpenFeedback. Ils ne seront pas synchronisés avec un autre service. Aucune configuration supplémentaire n'est requise.",
+            "projectTypeJsonimportDetail": "Téléversez ou collez un fichier .json correspondant au modèle FeedbackY. Les présentations et orateurs sont importés une fois dans FeedbackY, vous pourrez ensuite les modifier comme un évènement classique.",
+            "projectTypeOpenfeedback": "Base de donnée FeedbackY (par défaut)",
+            "projectTypeOpenfeedbackDetail": "Vous pouvez saisir manuellement les présentations / orateurs / calendrier sur FeedbackY. Ils ne seront pas synchronisés avec un autre service. Aucune configuration supplémentaire n'est requise.",
             "projectTypeRequired": "Vous devez choisir la façon dont vous souhaitez configurer l'évènement",
             "stepTitle": "Créer un nouvel évènement (étape 2/3)",
             "stepTitleDone": "Créer un nouvel évènement (étape 2/2)",
@@ -137,7 +137,7 @@
         "userNotVerified": "Utilisateur non vérifié",
         "loading": "Chargement de vos évènements et organisations...",
         "organization": {
-            "noOrganizationName": "Vos évènements OpenFeedback"
+            "noOrganizationName": "Vos évènements FeedbackY"
         },
         "selectEvent": "Sélectionner l'évènement "
     },
@@ -197,8 +197,8 @@
     },
     "settingsIntegration": {
         "title": "Intégration API",
-        "description": "Utilisez une clé API pour accéder aux données de cet évènement via l'API OpenFeedback.",
-        "descriptionOrganization": "Utilisez une clé API pour accéder aux données de cette organisation via l'API OpenFeedback.",
+        "description": "Utilisez une clé API pour accéder aux données de cet évènement via l'API FeedbackY.",
+        "descriptionOrganization": "Utilisez une clé API pour accéder aux données de cette organisation via l'API FeedbackY.",
         "documentationLink": "Consulter la documentation de l'API",
         "apiKey": "Clé API",
         "noKey": "Aucune clé API n'a encore été générée pour cet évènement.",
@@ -349,7 +349,7 @@
     "speakers": {
         "addButton": "Ajouter un orateur·rice",
         "addTitle": "Ajouter un·e nouveau·elle orateur·rice à l'événement",
-        "cannotChange": "Les orat·eurs·rices ne peuvent pas être modifié·e·s depuis OpenFeedback pour ce projet. Reportez-vous à la configuration de vos services externes pour le faire.",
+        "cannotChange": "Les orat·eurs·rices ne peuvent pas être modifié·e·s depuis FeedbackY pour ce projet. Reportez-vous à la configuration de vos services externes pour le faire.",
         "name": "Prénom/nom*",
         "nameRequired": "Le prénom du orateur·rice est obligatoire.",
         "photoUrl": "Photo",
@@ -364,7 +364,7 @@
     },
     "talks": {
         "addTalks": "Ajouter des présentations",
-        "cannotChange": "Les présentations ne peuvent pas être modifiées depuis OpenFeedback pour ce projet. Reportez-vous à la configuration de vos services externes pour le faire.",
+        "cannotChange": "Les présentations ne peuvent pas être modifiées depuis FeedbackY pour ce projet. Reportez-vous à la configuration de vos services externes pour le faire.",
         "fieldEndTime": "Heure de fin",
         "fieldSpeakers": "Orateur·rice·s",
         "fieldStartTime": "Heure de début",

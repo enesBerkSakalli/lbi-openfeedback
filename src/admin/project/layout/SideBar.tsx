@@ -1,5 +1,5 @@
 import { COLORS } from '../../../constants/colors'
-import logo from '../../../assets/logo-openfeedback-color&white.png'
+import { Wordmark } from '../../../baseComponents/BrandHeader.tsx'
 import { useAppDispatch, useAppSelector } from '../../../store'
 import type { DrawerToggleHandler } from './ProjectLayout.tsx'
 import { getUserSelector } from '../../auth/authSelectors'
@@ -118,11 +118,7 @@ export const SideBar = ({
                         <List component="nav">
                             <ListItem className={classes.logoContainer}>
                                 <Link to="/admin/">
-                                    <img
-                                        className={classes.logo}
-                                        src={logo}
-                                        alt="open feedback logo"
-                                    />
+                                    <Wordmark />
                                 </Link>
                             </ListItem>
                             <Divider />
