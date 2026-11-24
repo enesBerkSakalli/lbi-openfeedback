@@ -93,7 +93,7 @@ export function AdminApp() {
         <I18nextProvider i18n={i18n}>
             <HelmetProvider>
                 <Helmet>
-                    <title>Admin - Open Feedback</title>
+                    <title>Admin - FeedbackY</title>
                 </Helmet>
                 <Login>
                     <StyledEngineProvider injectFirst>

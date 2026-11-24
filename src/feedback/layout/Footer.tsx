@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Box, useTheme } from '@mui/material'
+import { Wordmark } from '../../baseComponents/BrandHeader.tsx'
 
 export const Footer = () => {
     const { t } = useTranslation()
@@ -17,21 +18,9 @@ export const Footer = () => {
             color={theme.palette.textDimmed}
             component="footer"
         >
-            <Box display="flex" flexDirection="row">
-                <span style={{ marginRight: 6, marginTop: -2 }}>
-                    {t('footer.madeBy')}
-                </span>
-                <a
-                    href="https://github.com/HugoGresse/open-feedback"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img
-                        height="25"
-                        src="/static/logos/openfeedback-black-orange.svg"
-                        alt="open feedback"
-                    />
-                </a>
+            <Box display="flex" flexDirection="row" alignItems="center">
+                <span style={{ marginRight: 8 }}>{t('footer.madeBy')}</span>
+                <Wordmark size={16} color={theme.palette.ink} />
             </Box>
         </Box>
     )

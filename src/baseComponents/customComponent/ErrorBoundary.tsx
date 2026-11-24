@@ -43,7 +43,7 @@ export class ErrorBoundary extends Component<
                 <Box margin={4}>
                     <h3>
                         Something went wrong. It may be linked to an issue with
-                        Open Feedback itself or your internet connection.{' '}
+                        FeedbackY itself or your internet connection.{' '}
                     </h3>
                     <p>
                         An alert has been triggered and someone will hopefully

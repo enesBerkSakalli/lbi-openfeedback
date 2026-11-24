@@ -1,9 +1,17 @@
 {
     "start": {
-        "title": "LBI feedback",
+        "title": "FeedbackY",
+        "kicker": "Ludwig Boltzmann Institute · Talk feedback",
         "intro": "Anonymous feedback, questions and ideas for the talks at the Ludwig Boltzmann Institute.",
         "howTo": "To give feedback, scan the QR code shown at the seminar or open the link from the seminar email. No login needed.",
         "login": "Organizer login",
-        "questions": "Questions:"
+        "sampleLink": "See a sample report",
+        "questions": "Questions:",
+        "stepsTitle": "How it works",
+        "step1": "Scan the QR code at the seminar or open the link from the email.",
+        "step2": "Vote and write comments for each talk. Nothing ties them to you.",
+        "step3": "Speakers get one clear report: what is wrong, what to fix, what to decide.",
+        "sampleTitle": "Sample report",
+        "findingsTitle": "Selected findings"
     }
 }

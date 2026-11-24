@@ -1,9 +1,17 @@
 {
     "start": {
-        "title": "Retours LBI",
+        "title": "FeedbackY",
+        "kicker": "Ludwig Boltzmann Institute · Retours sur les présentations",
         "intro": "Retours anonymes, questions et idées sur les présentations du Ludwig Boltzmann Institute.",
         "howTo": "Pour donner votre avis, scannez le QR code affiché au séminaire ou ouvrez le lien de l’e-mail du séminaire. Aucune connexion nécessaire.",
         "login": "Connexion organisateur",
-        "questions": "Questions :"
+        "sampleLink": "Voir un exemple de rapport",
+        "questions": "Questions :",
+        "stepsTitle": "Comment ça marche",
+        "step1": "Scannez le QR code au séminaire ou ouvrez le lien de l’e-mail.",
+        "step2": "Votez et commentez chaque présentation. Rien ne vous identifie.",
+        "step3": "Les intervenants reçoivent un rapport clair : ce qui ne va pas, ce qu’il faut corriger, ce qu’il faut décider.",
+        "sampleTitle": "Exemple de rapport",
+        "findingsTitle": "Remarques choisies"
     }
 }

@@ -109,7 +109,7 @@ export const TalkHeader = ({ talk, speakers }: TalkHeaderProps) => {
             </Box>
             <QRCodeButton
                 url={document.location.href}
-                fileName={talk.title.trim() + '-qr-code-openfeedback'}
+                fileName={talk.title.trim() + '-qr-code-feedbacky'}
                 logo={project.logoSmall}
                 eventColor={
                     project.chipColors ? project.chipColors[0] : undefined

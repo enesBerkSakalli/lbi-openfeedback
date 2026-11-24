@@ -1,15 +1,20 @@
 import { memo, type ReactNode, useEffect, useState } from 'react'
 import type firebase from 'firebase/compat/app'
-import logoWhite from '../../assets/logo-openfeedback-white.png'
 import { authProvider, isUsingEmulators } from '../../firebase.ts'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { getLoginErrorSelector, isLoggedSelector } from './authSelectors'
 import { didSignIn, signOut } from './authActions'
 import { LoaderMatchParent } from '../../baseComponents/customComponent/LoaderMatchParent.tsx'
 import Box from '@mui/material/Box'
-import { HEX_COLORS } from '../../constants/colors'
+import { BrandHeader } from '../../baseComponents/BrandHeader.tsx'
 import { EmulatorLogin, setLoginCookie } from './EmulatorLogin.tsx'
-import { EmailPasswordAuth } from '../../baseComponents/EmailPasswordAuth.tsx'
+import {
+    EmailPasswordAuth,
+    LOGIN_STYLE,
+    monoLabel,
+} from '../../baseComponents/EmailPasswordAuth.tsx'
+
+const { ink, azure } = LOGIN_STYLE
 
 interface LoginProps {
     children?: ReactNode
@@ -72,32 +77,64 @@ export const Login = memo(({ children }: LoginProps) => {
 
     return (
         <Box
-            height="100vh"
-            bgcolor={HEX_COLORS.RED_ORANGE}
-            padding={1}
+            minHeight="100vh"
+            bgcolor="#e6e6e2"
+            color={ink}
             display="flex"
-            boxSizing="border-box"
+            flexDirection="column"
         >
+            <BrandHeader>
+                <Box
+                    component="span"
+                    sx={{
+                        ...monoLabel,
+                        fontWeight: 700,
+                        padding: '6px 10px',
+                        border: `2px solid ${ink}`,
+                        backgroundColor: '#fff',
+                        boxShadow: `3px 3px 0 ${ink}`,
+                    }}
+                >
+                    Admin
+                </Box>
+            </BrandHeader>
             <Box
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
                 flexGrow="1"
-                textAlign="center"
+                gap={3}
+                padding="32px 16px 48px"
             >
-                <img
-                    height="40"
-                    src={logoWhite}
-                    alt="open feedback"
-                    style={{ marginBottom: '40px' }}
-                />
+                <Box
+                    sx={{
+                        ...monoLabel,
+                        padding: '6px 14px',
+                        border: `1px solid ${azure}`,
+                        color: azure,
+                    }}
+                >
+                    FeedbackY — Admin console
+                </Box>
                 {isUsingEmulators && <EmulatorLogin />}
                 {loaderDisplayed && (
-                    <LoaderMatchParent style={{ color: 'white' }} height={40} />
+                    <LoaderMatchParent style={{ color: ink }} height={40} />
                 )}
                 {!loaderDisplayed && <EmailPasswordAuth />}
-                {loginError && <div>{loginError}</div>}
+                {loginError && (
+                    <Box
+                        role="alert"
+                        sx={{
+                            ...monoLabel,
+                            padding: '8px 12px',
+                            border: `2px solid ${ink}`,
+                            backgroundColor: '#fff',
+                        }}
+                    >
+                        {loginError}
+                    </Box>
+                )}
             </Box>
         </Box>
     )

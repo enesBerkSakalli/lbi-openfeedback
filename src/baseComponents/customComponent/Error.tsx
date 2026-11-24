@@ -30,11 +30,12 @@ interface ErrorProps {
 
 export const Error = ({ error, errorDetail }: ErrorProps) => {
     const classes = useStyles()
-    const reportString = `mailto:hugo.gresse@gmail.com?subject=OpenFeedback%20Error&body=@error:${JSON.stringify(
-        error
-    )}@detail:${JSON.stringify(errorDetail)}@url:${JSON.stringify(
-        window.location.href
-    )}`
+    // Reports go to this deployment's admin; no address, no Report button.
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL
+    const reportBody = `@error:${JSON.stringify(error)}@detail:${JSON.stringify(
+        errorDetail
+    )}@url:${JSON.stringify(window.location.href)}`
+    const reportString = `mailto:${adminEmail}?subject=FeedbackY%20Error&body=${encodeURIComponent(reportBody)}`
 
     return (
         <Box
@@ -58,16 +59,19 @@ export const Error = ({ error, errorDetail }: ErrorProps) => {
                 variant="contained"
                 color="primary"
                 sx={{ marginTop: '30px' }}
+                onClick={() => window.location.reload()}
             >
                 Reload the page
             </Button>
-            <Button
-                variant="contained"
-                className={classes.button}
-                href={reportString}
-            >
-                Report
-            </Button>
+            {adminEmail && (
+                <Button
+                    variant="contained"
+                    className={classes.button}
+                    href={reportString}
+                >
+                    Report
+                </Button>
+            )}
         </Box>
     )
 }
